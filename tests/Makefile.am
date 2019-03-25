@@ -162,6 +162,7 @@ EXTRA_DIST = \
 	virstorageutildata \
 	virfilecachedata \
 	virresctrldata \
+	qemujson2argvdata \
 	$(NULL)
 
 test_helpers = commandhelper ssh
@@ -283,6 +284,7 @@ test_programs += qemuxml2argvtest qemuxml2xmltest \
 	qemumigparamstest \
 	qemusecuritytest \
 	qemufirmwaretest \
+	qemujson2argvtest \
 	$(NULL)
 test_helpers += qemucapsprobe
 test_libraries += libqemumonitortestutils.la \
@@ -692,6 +694,18 @@ qemufirmwaretest_SOURCES = \
 	$(NULL)
 qemufirmwaretest_LDADD = $(qemu_LDADDS) $(LDADDS)
 
+qemujson2argvtest_SOURCES = \
+	virfilewrapper.c virfilewrapper.h \
+	testutilsqemu.c testutilsqemu.h \
+	testutils.c testutils.h \
+	qemujson2argvtest.c \
+	$(NULL)
+qemujson2argvtest_LDADD = \
+	libqemutestdriver.la \
+	$(LIBXML_LIBS) \
+	$(LDADDS) \
+	$(NULL)
+
 else ! WITH_QEMU
 EXTRA_DIST += qemuxml2argvtest.c qemuxml2xmltest.c qemuargv2xmltest.c \
 	domainsnapshotxml2xmltest.c \
@@ -706,6 +720,7 @@ EXTRA_DIST += qemuxml2argvtest.c qemuxml2xmltest.c qemuargv2xmltest.c \
 	qemusecuritytest.c qemusecuritytest.h \
 	qemusecuritymock.c \
 	qemufirmwaretest.c \
+	qemujson2argvtest.c \
 	$(QEMUMONITORTESTUTILS_SOURCES)
 endif ! WITH_QEMU
 

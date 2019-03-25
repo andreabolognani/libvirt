@@ -1,0 +1,29 @@
+{
+    "domain": {
+        "attributes": {
+            "type": "qemu"
+        },
+        "children": {
+            "name": {
+                "value": "guest"
+            },
+            "uuid": {
+                "value": "4f49aff1-4f74-45c3-87a7-51a6ad052a54"
+            },
+            "memory": {
+                "value": 4194304
+            },
+            "os": {
+                "children": {
+                    "type": {
+                        "attributes": {
+                            "arch": "x86_64",
+                            "machine": "pc"
+                        },
+                        "value": "hvm"
+                    }
+                }
+            }
+        }
+    }
+}
