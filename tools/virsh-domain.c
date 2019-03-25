@@ -8208,6 +8208,14 @@ static const vshCmdOptDef opts_define[] = {
      .type = VSH_OT_BOOL,
      .help = N_("validate the XML against the schema")
     },
+    {.name = "xml",
+     .type = VSH_OT_BOOL,
+     .help = N_("Input file is in XML format")
+    },
+    {.name = "json",
+     .type = VSH_OT_BOOL,
+     .help = N_("Input file is in JSON format")
+    },
     {.name = NULL}
 };
 
@@ -8220,6 +8228,9 @@ cmdDefine(vshControl *ctl, const vshCmd *cmd)
     char *buffer;
     unsigned int flags = 0;
     virshControlPtr priv = ctl->privData;
+    bool xmlInput;
+
+    VSH_EXCLUSIVE_OPTIONS("xml", "json");
 
     if (vshCommandOptStringReq(ctl, cmd, "file", &from) < 0)
         return false;
@@ -8227,13 +8238,30 @@ cmdDefine(vshControl *ctl, const vshCmd *cmd)
     if (vshCommandOptBool(cmd, "validate"))
         flags |= VIR_DOMAIN_DEFINE_VALIDATE;
 
+    /* If the input filename ends with .json, it's fair to assume that
+     * the format is going to be JSON. We default to XML otherwise */
+    xmlInput = true;
+    if (virStringHasCaseSuffix(from, ".json"))
+        xmlInput = false;
+
+    /* User asked for a specific input format: override both defaults
+     * and automatic detection */
+    if (vshCommandOptBool(cmd, "xml"))
+        xmlInput = true;
+    else if (vshCommandOptBool(cmd, "json"))
+        xmlInput = false;
+
     if (virFileReadAll(from, VSH_MAX_XML_FILE, &buffer) < 0)
         return false;
 
-    if (flags)
-        dom = virDomainDefineXMLFlags(priv->conn, buffer, flags);
-    else
-        dom = virDomainDefineXML(priv->conn, buffer);
+    if (xmlInput) {
+        if (flags)
+            dom = virDomainDefineXMLFlags(priv->conn, buffer, flags);
+        else
+            dom = virDomainDefineXML(priv->conn, buffer);
+    } else {
+        dom = virDomainDefineJSONFlags(priv->conn, buffer, flags);
+    }
     VIR_FREE(buffer);
 
     if (dom != NULL) {
