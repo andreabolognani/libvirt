@@ -74,6 +74,7 @@ sub fixup_name {
     $name =~ s/Scsi/SCSI/;
     $name =~ s/Wwn$/WWN/;
     $name =~ s/Dhcp$/DHCP/;
+    $name =~ s/Json/JSON/;
 
     return $name;
 }
