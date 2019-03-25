@@ -7720,6 +7720,89 @@ qemuDomainDefineXML(virConnectPtr conn, const char *xml)
     return qemuDomainDefineXMLFlags(conn, xml, 0);
 }
 
+static virDomainPtr
+qemuDomainDefineJSONFlags(virConnectPtr conn,
+                          const char *json,
+                          unsigned int flags)
+{
+    virQEMUDriverPtr driver = conn->privateData;
+    virDomainDefPtr def = NULL;
+    virDomainDefPtr oldDef = NULL;
+    virDomainObjPtr vm = NULL;
+    virDomainPtr dom = NULL;
+    virObjectEventPtr event = NULL;
+    virQEMUDriverConfigPtr cfg;
+    virCapsPtr caps = NULL;
+    unsigned int parse_flags = VIR_DOMAIN_DEF_PARSE_INACTIVE |
+                               VIR_DOMAIN_DEF_PARSE_ABI_UPDATE;
+
+    virCheckFlags(VIR_DOMAIN_DEFINE_VALIDATE, NULL);
+
+    if (flags & VIR_DOMAIN_DEFINE_VALIDATE)
+        parse_flags |= VIR_DOMAIN_DEF_PARSE_VALIDATE_SCHEMA;
+
+    cfg = virQEMUDriverGetConfig(driver);
+
+    if (!(caps = virQEMUDriverGetCapabilities(driver, false)))
+        goto cleanup;
+
+    if (!(def = virDomainDefParseJSONString(json, caps, driver->xmlopt,
+                                            NULL, parse_flags)))
+        goto cleanup;
+
+    if (virXMLCheckIllegalChars("name", def->name, "\n") < 0)
+        goto cleanup;
+
+    if (virDomainDefineJSONFlagsEnsureACL(conn, def) < 0)
+        goto cleanup;
+
+    if (!(vm = virDomainObjListAdd(driver->domains, def,
+                                   driver->xmlopt,
+                                   0, &oldDef)))
+        goto cleanup;
+    def = NULL;
+
+    vm->persistent = 1;
+
+    if (virDomainSaveConfig(cfg->configDir, driver->caps,
+                            vm->newDef ? vm->newDef : vm->def) < 0) {
+        if (oldDef) {
+            /* There is backup so this VM was defined before.
+             * Just restore the backup. */
+            VIR_INFO("Restoring domain '%s' definition", vm->def->name);
+            if (virDomainObjIsActive(vm))
+                vm->newDef = oldDef;
+            else
+                vm->def = oldDef;
+            oldDef = NULL;
+        } else {
+            /* Brand new domain. Remove it */
+            VIR_INFO("Deleting domain '%s'", vm->def->name);
+            vm->persistent = 0;
+            qemuDomainRemoveInactiveJob(driver, vm);
+        }
+        goto cleanup;
+    }
+
+    event = virDomainEventLifecycleNewFromObj(vm,
+                                     VIR_DOMAIN_EVENT_DEFINED,
+                                     !oldDef ?
+                                     VIR_DOMAIN_EVENT_DEFINED_ADDED :
+                                     VIR_DOMAIN_EVENT_DEFINED_UPDATED);
+
+    VIR_INFO("Creating domain '%s'", vm->def->name);
+    dom = virGetDomain(conn, vm->def->name, vm->def->uuid, vm->def->id);
+
+ cleanup:
+    virDomainDefFree(oldDef);
+    virDomainDefFree(def);
+    virDomainObjEndAPI(&vm);
+    virObjectEventStateQueue(driver->domainEventState, event);
+    virObjectUnref(caps);
+    virObjectUnref(cfg);
+    return dom;
+}
+
 static int
 qemuDomainUndefineFlags(virDomainPtr dom,
                         unsigned int flags)
@@ -22559,6 +22642,7 @@ static virHypervisorDriver qemuHypervisorDriver = {
     .connectBaselineHypervisorCPU = qemuConnectBaselineHypervisorCPU, /* 4.4.0 */
     .nodeGetSEVInfo = qemuNodeGetSEVInfo, /* 4.5.0 */
     .domainGetLaunchSecurityInfo = qemuDomainGetLaunchSecurityInfo, /* 4.5.0 */
+    .domainDefineJSONFlags = qemuDomainDefineJSONFlags, /* 5.2.0 */
 };
 
 
