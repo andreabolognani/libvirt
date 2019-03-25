@@ -715,6 +715,13 @@ struct remote_domain_define_xml_flags_args {
 struct remote_domain_define_xml_flags_ret {
         remote_nonnull_domain      dom;
 };
+struct remote_domain_define_json_flags_args {
+        remote_nonnull_string      json;
+        u_int                      flags;
+};
+struct remote_domain_define_json_flags_ret {
+        remote_nonnull_domain      dom;
+};
 struct remote_domain_undefine_args {
         remote_nonnull_domain      dom;
 };
@@ -3385,4 +3392,5 @@ enum remote_procedure {
         REMOTE_PROC_CONNECT_LIST_ALL_NWFILTER_BINDINGS = 401,
         REMOTE_PROC_DOMAIN_SET_IOTHREAD_PARAMS = 402,
         REMOTE_PROC_CONNECT_GET_STORAGE_POOL_CAPABILITIES = 403,
+        REMOTE_PROC_DOMAIN_DEFINE_JSON_FLAGS = 404,
 };

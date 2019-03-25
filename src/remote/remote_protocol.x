@@ -1106,6 +1106,15 @@ struct remote_domain_define_xml_flags_ret {
     remote_nonnull_domain dom;
 };
 
+struct remote_domain_define_json_flags_args {
+    remote_nonnull_string json;
+    unsigned int flags;
+};
+
+struct remote_domain_define_json_flags_ret {
+    remote_nonnull_domain dom;
+};
+
 struct remote_domain_undefine_args {
     remote_nonnull_domain dom;
 };
@@ -6342,5 +6351,13 @@ enum remote_procedure {
      * @generate: both
      * @acl: connect:read
      */
-    REMOTE_PROC_CONNECT_GET_STORAGE_POOL_CAPABILITIES = 403
+    REMOTE_PROC_CONNECT_GET_STORAGE_POOL_CAPABILITIES = 403,
+
+    /**
+     * @priority: high
+     * @generate: both
+     * @acl: domain:write
+     * @acl: domain:save
+     */
+    REMOTE_PROC_DOMAIN_DEFINE_JSON_FLAGS = 404
 };
