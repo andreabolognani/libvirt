@@ -116,6 +116,17 @@
           unable to saturate the network link.
         </description>
       </change>
+      <change>
+        <summary>
+          Introduce the virDomainDefineJSONFlags() public API
+        </summary>
+        <description>
+          This new public API is very similar in scope and use to the existing
+          <code>virDomainDefineXMLFlags()</code> API, but it expects its input
+          to be in JSON format rather than XML. Note that support for many
+          features of the XML-based API is still missing at the moment.
+        </description>
+      </change>
     </section>
     <section title="Removed features">
       <change>
