@@ -1328,6 +1328,11 @@ typedef int
                                         int *nparams,
                                         unsigned int flags);
 
+typedef virDomainPtr
+(*virDrvDomainDefineJSONFlags)(virConnectPtr conn,
+                               const char *json,
+                               unsigned int flags);
+
 
 typedef struct _virHypervisorDriver virHypervisorDriver;
 typedef virHypervisorDriver *virHypervisorDriverPtr;
@@ -1580,6 +1585,7 @@ struct _virHypervisorDriver {
     virDrvConnectBaselineHypervisorCPU connectBaselineHypervisorCPU;
     virDrvNodeGetSEVInfo nodeGetSEVInfo;
     virDrvDomainGetLaunchSecurityInfo domainGetLaunchSecurityInfo;
+    virDrvDomainDefineJSONFlags domainDefineJSONFlags;
 };
 
 

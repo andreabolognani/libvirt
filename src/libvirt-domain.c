@@ -6218,6 +6218,51 @@ virDomainDefineXMLFlags(virConnectPtr conn, const char *xml, unsigned int flags)
 
 
 /**
+ * virDomainDefineJSONFlags:
+ * @conn: pointer to the hypervisor connection
+ * @json: the JSON description for the domain, preferably in UTF-8
+ * @flags: bitwise OR of the virDomainDefineFlags constants
+ *
+ * Defines a domain, but does not start it.
+ * This definition is persistent, until explicitly undefined with
+ * virDomainUndefine(). A previous definition for this domain would be
+ * overridden if it already exists.
+ *
+ * virDomainFree should be used to free the resources after the
+ * domain object is no longer needed.
+ *
+ * Returns NULL in case of error, a pointer to the domain otherwise
+ */
+virDomainPtr
+virDomainDefineJSONFlags(virConnectPtr conn,
+                         const char *json,
+                         unsigned int flags)
+{
+    VIR_DEBUG("conn=%p, json=%s flags=0x%x", conn, NULLSTR(json), flags);
+
+    virResetLastError();
+
+    virCheckConnectReturn(conn, NULL);
+    virCheckReadOnlyGoto(conn->flags, error);
+    virCheckNonNullArgGoto(json, error);
+
+    if (conn->driver->domainDefineJSONFlags) {
+        virDomainPtr ret;
+        ret = conn->driver->domainDefineJSONFlags(conn, json, flags);
+        if (!ret)
+            goto error;
+        return ret;
+    }
+
+    virReportUnsupportedError();
+
+ error:
+    virDispatchError(conn);
+    return NULL;
+}
+
+
+/**
  * virDomainUndefine:
  * @domain: pointer to a defined domain
  *

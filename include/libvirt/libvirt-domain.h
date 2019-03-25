@@ -1777,6 +1777,9 @@ virDomainPtr            virDomainDefineXML      (virConnectPtr conn,
 virDomainPtr            virDomainDefineXMLFlags (virConnectPtr conn,
                                                  const char *xml,
                                                  unsigned int flags);
+virDomainPtr            virDomainDefineJSONFlags (virConnectPtr conn,
+                                                  const char *json,
+                                                  unsigned int flags);
 int                     virDomainUndefine       (virDomainPtr domain);
 
 typedef enum {
