@@ -2954,6 +2954,11 @@ virDomainDefPtr virDomainDefParseFile(const char *filename,
                                       virDomainXMLOptionPtr xmlopt,
                                       void *parseOpaque,
                                       unsigned int flags);
+virDomainDefPtr virDomainDefParseJSONString(const char *buf,
+                                            virCapsPtr caps,
+                                            virDomainXMLOptionPtr xmlopt,
+                                            void *parseOpaque,
+                                            unsigned int flags);
 virDomainDefPtr virDomainDefParseNode(xmlDocPtr doc,
                                       xmlNodePtr root,
                                       virCapsPtr caps,

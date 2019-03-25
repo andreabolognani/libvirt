@@ -58,6 +58,7 @@
 #include "virhostdev.h"
 #include "virmdev.h"
 #include "virdomainsnapshotobjlist.h"
+#include "virjson.h"
 
 #define VIR_FROM_THIS VIR_FROM_DOMAIN
 
@@ -21203,6 +21204,246 @@ virDomainDefParseFile(const char *filename,
                       unsigned int flags)
 {
     return virDomainDefParse(NULL, filename, caps, xmlopt, parseOpaque, flags);
+}
+
+
+static int
+virDomainDefParseJSONDomainOSType(virDomainDefPtr def,
+                                  virJSONValuePtr osType)
+{
+    virJSONValuePtr attributes = virJSONValueObjectGetObject(osType, "attributes");
+    const char *type = NULL;
+    const char *arch = NULL;
+    const char *machine = NULL;
+    int ret = -1;
+
+    if (!attributes) {
+        virReportError(VIR_ERR_JSON_ERROR, "%s",
+                       _("No attributes for 'type' object"));
+        goto cleanup;
+    }
+
+    if (!(type = virJSONValueObjectGetString(osType, "value"))) {
+        virReportError(VIR_ERR_JSON_ERROR, "%s",
+                       _("Missing OS type"));
+        goto cleanup;
+    }
+
+    if ((def->os.type = virDomainOSTypeFromString(type)) < 0) {
+        virReportError(VIR_ERR_CONFIG_UNSUPPORTED,
+                       _("Invalid OS type '%s'"),
+                       type);
+        return -1;
+    }
+
+    if ((machine = virJSONValueObjectGetString(attributes, "machine")) &&
+        VIR_STRDUP(def->os.machine, machine) < 0) {
+        goto cleanup;
+    }
+
+    if ((arch = virJSONValueObjectGetString(attributes, "arch")) &&
+        !(def->os.arch = virArchFromString(arch))) {
+        virReportError(VIR_ERR_CONFIG_UNSUPPORTED,
+                       _("Invalid architecture '%s'"),
+                       arch);
+    }
+
+    ret = 0;
+
+ cleanup:
+    return ret;
+}
+
+
+static int
+virDomainDefParseJSONDomainOS(virDomainDefPtr def,
+                              virJSONValuePtr os)
+{
+    virJSONValuePtr children = virJSONValueObjectGetObject(os, "children");
+    virJSONValuePtr osType = NULL;
+    int ret = -1;
+
+    if (!children) {
+        virReportError(VIR_ERR_JSON_ERROR, "%s",
+                       _("No children for 'os' object"));
+        goto cleanup;
+    }
+
+    if (!(osType = virJSONValueObjectGetObject(children, "type"))) {
+        virReportError(VIR_ERR_JSON_ERROR, "%s",
+                       _("Missing 'type' children for 'os' object"));
+        goto cleanup;
+    }
+
+    if (virDomainDefParseJSONDomainOSType(def, osType) < 0)
+        goto cleanup;
+
+    ret = 0;
+
+ cleanup:
+    return ret;
+}
+
+
+static int
+virDomainDefParseJSONDomain(virDomainDefPtr def,
+                            virJSONValuePtr domain)
+{
+    virJSONValuePtr attributes = virJSONValueObjectGetObject(domain, "attributes");
+    virJSONValuePtr children = virJSONValueObjectGetObject(domain, "children");
+    virJSONValuePtr tmp = NULL;
+    const char *virtType = NULL;
+    const char *name = NULL;
+    int ret = -1;
+
+    if (!attributes) {
+        virReportError(VIR_ERR_JSON_ERROR, "%s",
+                       _("No attributes for 'domain' object"));
+        goto cleanup;
+    }
+
+    if (!(virtType = virJSONValueObjectGetString(attributes, "type"))) {
+        virReportError(VIR_ERR_JSON_ERROR, "%s",
+                       _("Missing 'type' attribute for 'domain' object"));
+        goto cleanup;
+    }
+
+    if ((def->virtType = virDomainVirtTypeFromString(virtType)) < 0) {
+        virReportError(VIR_ERR_CONFIG_UNSUPPORTED,
+                       _("Invalid virtualization type '%s'"),
+                       virtType);
+        goto cleanup;
+    }
+
+    if (!children) {
+        virReportError(VIR_ERR_JSON_ERROR, "%s",
+                       _("No children for 'domain' object"));
+        goto cleanup;
+    }
+
+    if (!(tmp = virJSONValueObjectGetObject(children, "name")) ||
+        !(name = virJSONValueObjectGetString(tmp, "value"))) {
+        virReportError(VIR_ERR_NO_NAME, NULL);
+        goto cleanup;
+    }
+
+    if (!VIR_STRDUP(def->name, name))
+        goto cleanup;
+
+    if ((tmp = virJSONValueObjectGetObject(children, "uuid"))) {
+
+        const char *uuid;
+
+        if (!(uuid = virJSONValueObjectGetString(tmp, "value")) ||
+            virUUIDParse(uuid, def->uuid) < 0) {
+            virReportError(VIR_ERR_JSON_ERROR,
+                           _("Invalid UUID '%s'"),
+                           uuid);
+            goto cleanup;
+        }
+    } else {
+        if (virUUIDGenerate(def->uuid) < 0) {
+            virReportError(VIR_ERR_INTERNAL_ERROR, "%s",
+                           _("Failed to generate UUID"));
+            goto cleanup;
+        }
+    }
+
+    if ((tmp = virJSONValueObjectGetObject(children, "memory"))) {
+
+        unsigned long long max = virMemoryMaxValue(true);
+        unsigned long long memory;
+
+        if (!virJSONValueObjectHasKey(tmp, "value")) {
+            virReportError(VIR_ERR_JSON_ERROR, "%s",
+                           _("Missing 'value' attribute for 'memory' object"));
+            goto cleanup;
+        }
+
+        if (virJSONValueObjectGetNumberUlong(tmp, "value", &memory) < 0 ||
+            virScaleInteger(&memory, NULL, 1024, max) < 0) {
+            virReportError(VIR_ERR_JSON_ERROR, "%s",
+                           _("Invalid memory size"));
+            goto cleanup;
+        }
+
+        /* Yes, we really do use kibibytes for our internal sizing.  */
+        def->mem.total_memory = VIR_DIV_UP(memory, 1024);
+
+        if (def->mem.total_memory >= VIR_DIV_UP(max, 1024)) {
+            virReportError(VIR_ERR_OVERFLOW, "%s",
+                           _("Memory size is too large"));
+            goto cleanup;
+        }
+    }
+
+    if (virDomainDefSetVcpusMax(def, 1, NULL) < 0 ||
+        virDomainDefSetVcpus(def, 1) < 0) {
+        goto cleanup;
+    }
+
+    if (!(tmp = virJSONValueObjectGetObject(children, "os"))) {
+        virReportError(VIR_ERR_JSON_ERROR, "%s",
+                       _("No 'os' object"));
+        goto cleanup;
+    }
+
+    if (virDomainDefParseJSONDomainOS(def, tmp) < 0)
+        goto cleanup;
+
+    ret = 0;
+
+ cleanup:
+    return ret;
+}
+
+
+static virDomainDefPtr
+virDomainDefParseJSON(virJSONValuePtr json,
+                      virCapsPtr caps,
+                      virDomainXMLOptionPtr xmlopt,
+                      void *parseOpaque,
+                      unsigned int flags)
+{
+    virDomainDefPtr def = NULL;
+    virJSONValuePtr domain = NULL;
+
+    if (!(def = virDomainDefNew()))
+        goto error;
+
+    if (!(domain = virJSONValueObjectGetObject(json, "domain"))) {
+        virReportError(VIR_ERR_JSON_ERROR, "%s",
+                       _("No 'domain' object"));
+        goto error;
+    }
+
+    if (virDomainDefParseJSONDomain(def, domain) < 0 ||
+        virDomainDefPostParse(def, caps, flags, xmlopt, parseOpaque) < 0 ||
+        virDomainDefValidate(def, caps, flags, xmlopt) < 0) {
+        goto error;
+    }
+
+    return def;
+
+ error:
+    virDomainDefFree(def);
+    return NULL;
+}
+
+
+virDomainDefPtr
+virDomainDefParseJSONString(const char *buf,
+                            virCapsPtr caps,
+                            virDomainXMLOptionPtr xmlopt,
+                            void *parseOpaque,
+                            unsigned int flags)
+{
+    VIR_AUTOPTR(virJSONValue) json = NULL;
+
+    if (!(json = virJSONValueFromString(buf)))
+        return NULL;
+
+    return virDomainDefParseJSON(json, caps, xmlopt, parseOpaque, flags);
 }
 
 

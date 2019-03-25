@@ -326,6 +326,7 @@ typedef enum {
     VIR_ERR_INVALID_DOMAIN_CHECKPOINT = 102, /* invalid domain checkpoint */
     VIR_ERR_NO_DOMAIN_CHECKPOINT = 103, /* domain checkpoint not found */
     VIR_ERR_NO_DOMAIN_BACKUP = 104,     /* domain backup job id not found */
+    VIR_ERR_JSON_ERROR = 105,           /* JSON format error */
 
 # ifdef VIR_ENUM_SENTINELS
     VIR_ERR_NUMBER_LAST

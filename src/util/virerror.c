@@ -1224,6 +1224,9 @@ const virErrorMsgTuple virErrorMsgStrings[VIR_ERR_NUMBER_LAST] = {
     [VIR_ERR_NO_DOMAIN_BACKUP] = {
         N_("Domain backup job id not found"),
         N_("Domain backup job id not found: %s") },
+    [VIR_ERR_JSON_ERROR] = {
+        N_("JSON description is invalid or not well formed"),
+        N_("JSON error: %s") },
 };
 
 

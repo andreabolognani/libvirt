@@ -291,6 +291,7 @@ virDomainDefMaybeAddInput;
 virDomainDefNeedsPlacementAdvice;
 virDomainDefNew;
 virDomainDefParseFile;
+virDomainDefParseJSONString;
 virDomainDefParseNode;
 virDomainDefParseString;
 virDomainDefPostParse;
