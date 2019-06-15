@@ -206,6 +206,7 @@ test_programs = virshtest sockettest \
 	virtypedparamtest \
 	vshtabletest \
 	virerrortest \
+	virtblockstest \
 	$(NULL)
 
 test_libraries = libshunload.la \
@@ -992,6 +993,18 @@ virerrortest_SOURCES = \
 	virerrortest.c \
 	testutils.c testutils.h
 virerrortest_LDADD = $(LDADDS)
+
+virtblockstest_SOURCES = \
+	testutils.h \
+	testutils.c \
+	virtblockstest.c \
+	$(NULL)
+virtblockstest_CFLAGS = \
+	$(AM_CFLAGS) \
+	$(NULL)
+virtblockstest_LDADD = \
+	$(LDADDS) \
+	$(NULL)
 
 vshtabletest_SOURCES = \
 	vshtabletest.c \
