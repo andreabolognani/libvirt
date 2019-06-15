@@ -25,6 +25,7 @@ AM_CPPFLAGS = \
 	-I$(top_builddir)/src -I$(top_srcdir)/src \
 	-I$(top_srcdir)/src/util \
 	-I$(top_srcdir)/src/conf \
+	-I$(top_srcdir)/src/rust \
 	$(NULL)
 
 WARN_CFLAGS += $(RELAXED_FRAME_LIMIT_CFLAGS)
@@ -994,6 +995,8 @@ virerrortest_SOURCES = \
 	testutils.c testutils.h
 virerrortest_LDADD = $(LDADDS)
 
+include $(top_srcdir)/src/rust/Makefile.def.inc.am
+
 virtblockstest_SOURCES = \
 	testutils.h \
 	testutils.c \
@@ -1001,9 +1004,11 @@ virtblockstest_SOURCES = \
 	$(NULL)
 virtblockstest_CFLAGS = \
 	$(AM_CFLAGS) \
+	$(VIRTBLOCKS_CFLAGS) \
 	$(NULL)
 virtblockstest_LDADD = \
 	$(LDADDS) \
+	../src/libvirt_rust.la \
 	$(NULL)
 
 vshtabletest_SOURCES = \
