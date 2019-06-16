@@ -36,4 +36,4 @@ id=drive-ide0-0-2,readonly=on \
 -drive file=iscsi://iscsi.example.com:3260/demo-target/3,format=raw,if=none,\
 id=drive-ide0-0-4,readonly=on \
 -device ide-cd,bus=ide.0,unit=4,drive=drive-ide0-0-4,id=ide0-0-4 \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x3
+-device virtio-memballoon

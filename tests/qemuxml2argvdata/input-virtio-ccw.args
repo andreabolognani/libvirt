@@ -29,4 +29,4 @@ id=virtio-disk0,bootindex=1 \
 -device virtio-keyboard-ccw,id=input0,devno=fe.0.0002 \
 -device virtio-mouse-ccw,id=input1,devno=fe.0.0003 \
 -device virtio-tablet-ccw,id=input2,devno=fe.0.0004 \
--device virtio-balloon-ccw,id=balloon0,devno=fe.0.0001
+-device virtio-memballoon

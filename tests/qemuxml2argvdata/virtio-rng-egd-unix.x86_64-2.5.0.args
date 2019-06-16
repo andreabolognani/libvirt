@@ -26,7 +26,7 @@ server,nowait \
 -no-acpi \
 -boot strict=on \
 -device piix3-usb-uhci,id=usb,bus=pci.0,addr=0x1.0x2 \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x2 \
+-device virtio-memballoon \
 -chardev socket,id=charrng0,path=/tmp/rng.socket,server,nowait \
 -object rng-egd,id=objrng0,chardev=charrng0 \
 -device virtio-rng-pci,rng=objrng0,id=rng0,bus=pci.0,addr=0x3 \

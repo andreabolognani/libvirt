@@ -115,4 +115,4 @@ addr=0x4 \
 -netdev user,id=hostnet31 \
 -device e1000,netdev=hostnet31,id=net31,mac=52:54:00:7e:6e:c8,bus=pci.1,\
 addr=0x5 \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x6
+-device virtio-memballoon

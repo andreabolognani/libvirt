@@ -34,4 +34,4 @@ format=raw,id=drive-hostdev0 \
 -drive file=iscsi://example.org:3260/iqn.1992-01.com.example/1,if=none,\
 format=raw,id=drive-hostdev1 \
 -device scsi-generic,bus=scsi0.0,scsi-id=5,drive=drive-hostdev1,id=hostdev1 \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x4
+-device virtio-memballoon

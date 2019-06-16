@@ -29,4 +29,4 @@ server,nowait \
 -device isa-serial,chardev=charserial0,id=serial0 \
 -chardev socket,id=charserial1,path=/tmp/serial-server.sock,server,nowait \
 -device isa-serial,chardev=charserial1,id=serial1 \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x3
+-device virtio-memballoon

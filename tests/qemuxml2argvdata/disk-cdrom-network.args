@@ -36,4 +36,4 @@ id=drive-ide0-1-0,readonly=on \
 -drive file=tftp://host.name:69/url/path/file.iso,format=raw,if=none,\
 id=drive-ide0-1-1,readonly=on \
 -device ide-cd,bus=ide.1,unit=1,drive=drive-ide0-1-1,id=ide0-1-1 \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x3
+-device virtio-memballoon

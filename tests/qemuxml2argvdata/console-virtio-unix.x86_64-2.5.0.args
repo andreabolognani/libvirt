@@ -31,5 +31,5 @@ server,nowait \
 -device virtconsole,chardev=charconsole0,id=console0 \
 -chardev socket,id=charconsole1,path=/tmp/connect.socket \
 -device virtconsole,chardev=charconsole1,id=console1 \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x3 \
+-device virtio-memballoon \
 -msg timestamp=on

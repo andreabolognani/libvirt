@@ -51,8 +51,7 @@ ats=on \
 addr=0x12,iommu_platform=on,ats=on \
 -device virtio-gpu-pci,id=video0,virgl=on,bus=pci.0,addr=0x2,iommu_platform=on,\
 ats=on \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0xc,iommu_platform=on,\
-ats=on \
+-device virtio-memballoon \
 -object rng-random,id=objrng0,filename=/dev/random \
 -device virtio-rng-pci,rng=objrng0,id=rng0,iommu_platform=on,ats=on,bus=pci.0,\
 addr=0xd

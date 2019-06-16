@@ -28,7 +28,7 @@ file=/tmp/lib/domain--1-QEMUGuest1/master-key.aes \
 -drive file=/dev/HostVG/QEMUGuest1,format=raw,if=none,id=drive-virtio-disk0 \
 -device virtio-blk-ccw,scsi=off,devno=fe.0.0000,drive=drive-virtio-disk0,\
 id=virtio-disk0,bootindex=1 \
--device virtio-balloon-ccw,id=balloon0,devno=fe.0.0001 \
+-device virtio-memballoon \
 -sandbox on,obsolete=deny,elevateprivileges=deny,spawn=deny,\
 resourcecontrol=deny \
 -device vhost-vsock-ccw,id=vsock0,guest-cid=4,vhostfd=6789,devno=fe.0.0003 \

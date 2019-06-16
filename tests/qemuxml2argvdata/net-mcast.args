@@ -30,4 +30,4 @@ server,nowait \
 -netdev socket,mcast=192.0.0.1:5558,id=hostnet0 \
 -device rtl8139,netdev=hostnet0,id=net0,mac=52:54:00:8c:b9:05,bus=pci.0,\
 addr=0x3 \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x4
+-device virtio-memballoon

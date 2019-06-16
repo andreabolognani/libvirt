@@ -31,7 +31,7 @@ file=/tmp/lib/domain--1-QEMUGuest1/master-key.aes \
 -device isa-serial,chardev=charserial0,id=serial0 \
 -chardev socket,id=charserial1,fd=1729,server,nowait \
 -device isa-serial,chardev=charserial1,id=serial1 \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x2 \
+-device virtio-memballoon \
 -sandbox on,obsolete=deny,elevateprivileges=deny,spawn=deny,\
 resourcecontrol=deny \
 -msg timestamp=on

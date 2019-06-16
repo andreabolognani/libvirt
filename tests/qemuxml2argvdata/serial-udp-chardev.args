@@ -32,4 +32,4 @@ localport=9999 \
 -device isa-serial,chardev=charserial0,id=serial0 \
 -chardev udp,id=charserial1,host=,port=9999,localaddr=,localport=0 \
 -device isa-serial,chardev=charserial1,id=serial1 \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x3
+-device virtio-memballoon

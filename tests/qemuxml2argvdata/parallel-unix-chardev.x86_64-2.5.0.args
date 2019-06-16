@@ -30,5 +30,5 @@ server,nowait \
 -device isa-parallel,chardev=charparallel0,id=parallel0 \
 -chardev socket,id=charparallel1,path=/tmp/parport1.socket \
 -device isa-parallel,chardev=charparallel1,id=parallel1 \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x2 \
+-device virtio-memballoon \
 -msg timestamp=on

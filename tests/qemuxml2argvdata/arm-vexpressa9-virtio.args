@@ -38,6 +38,6 @@ server,nowait \
 -serial chardev:charserial0 \
 -chardev pty,id=charconsole1 \
 -device virtconsole,chardev=charconsole1,id=console1 \
--device virtio-balloon-device,id=balloon0 \
+-device virtio-memballoon \
 -object rng-random,id=objrng0,filename=/dev/random \
 -device virtio-rng-device,rng=objrng0,id=rng0

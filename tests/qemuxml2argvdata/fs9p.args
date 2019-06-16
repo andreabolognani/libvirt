@@ -37,4 +37,4 @@ bus=pci.0,addr=0x4 \
 -fsdev handle,writeout=immediate,id=fsdev-fs2,path=/export/to/guest3 \
 -device virtio-9p-pci,id=fs2,fsdev=fsdev-fs2,mount_tag=/import/from/host3,\
 bus=pci.0,addr=0x5 \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x6
+-device virtio-memballoon

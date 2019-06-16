@@ -36,4 +36,4 @@ id=virtio-disk0 \
 -drive file=/tmp/logs.img,format=raw,if=none,id=drive-virtio-disk1 \
 -device virtio-blk-pci,scsi=off,bus=pci.0,addr=0x4,drive=drive-virtio-disk1,\
 id=virtio-disk1 \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x5
+-device virtio-memballoon
