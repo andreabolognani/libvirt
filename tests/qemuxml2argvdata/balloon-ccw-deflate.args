@@ -23,4 +23,4 @@ server,nowait \
 -mon chardev=charmonitor,id=monitor,mode=control \
 -rtc base=utc \
 -no-shutdown \
--device virtio-balloon-ccw,id=balloon0,devno=fe.0.000a,deflate-on-oom=on
+-device virtio-memballoon

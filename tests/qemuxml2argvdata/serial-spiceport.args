@@ -33,4 +33,4 @@ server,nowait \
 seamless-migration=on \
 -device qxl-vga,id=video0,ram_size=67108864,vram_size=67108864,bus=pci.0,\
 addr=0x2 \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x3
+-device virtio-memballoon

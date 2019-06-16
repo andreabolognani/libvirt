@@ -29,4 +29,4 @@ server,nowait \
 id=virtio-disk0,bootindex=1 \
 -device vhost-scsi-ccw,wwpn=naa.5123456789abcde0,vhostfd=3,id=hostdev0,\
 devno=fe.0.0002 \
--device virtio-balloon-ccw,id=balloon0,devno=fe.0.0003
+-device virtio-memballoon

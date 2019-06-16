@@ -34,4 +34,4 @@ path=/tmp/lib/domain--1-instance-00000092/monitor.sock,server,nowait \
 -no-shutdown \
 -no-acpi \
 -usb \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x3
+-device virtio-memballoon

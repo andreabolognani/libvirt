@@ -36,7 +36,7 @@ id=drive-ide0-1-0,readonly=on \
 -device ide-cd,bus=ide.1,unit=0,drive=drive-ide0-1-0,id=ide0-1-0,bootindex=1 \
 -drive if=none,id=drive-ide0-1-1,readonly=on \
 -device ide-cd,bus=ide.1,unit=1,drive=drive-ide0-1-1,id=ide0-1-1 \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x2 \
+-device virtio-memballoon \
 -sandbox on,obsolete=deny,elevateprivileges=deny,spawn=deny,\
 resourcecontrol=deny \
 -msg timestamp=on

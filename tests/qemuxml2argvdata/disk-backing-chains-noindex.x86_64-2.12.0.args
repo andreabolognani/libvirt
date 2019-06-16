@@ -55,7 +55,7 @@ id=virtio-disk4 \
 id=drive-virtio-disk5 \
 -device virtio-blk-pci,scsi=off,bus=pci.0,addr=0x7,drive=drive-virtio-disk5,\
 id=virtio-disk5 \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x8 \
+-device virtio-memballoon \
 -sandbox on,obsolete=deny,elevateprivileges=deny,spawn=deny,\
 resourcecontrol=deny \
 -msg timestamp=on

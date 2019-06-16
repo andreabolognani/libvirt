@@ -118,4 +118,4 @@ addr=0x6 \
 -vnc 127.0.0.1:0 \
 -k en-us \
 -vga cirrus \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x6
+-device virtio-memballoon

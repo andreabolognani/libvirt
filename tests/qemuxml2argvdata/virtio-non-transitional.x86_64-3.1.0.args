@@ -56,8 +56,7 @@ id=net0,mac=00:11:22:33:44:55,bus=pci.2,addr=0x0 \
 evdev=/dev/input/event1234,bus=pci.9,addr=0x0 \
 -device vhost-scsi-pci,disable-legacy=on,disable-modern=off,\
 wwpn=naa.5123456789abcde0,vhostfd=3,id=hostdev0,bus=pci.6,addr=0x0 \
--device virtio-balloon-pci,disable-legacy=on,disable-modern=off,id=balloon0,\
-bus=pci.7,addr=0x0 \
+-device virtio-memballoon-non-transitional \
 -object rng-random,id=objrng0,filename=/dev/urandom \
 -device virtio-rng-pci,disable-legacy=on,disable-modern=off,rng=objrng0,\
 id=rng0,bus=pci.8,addr=0x0 \

@@ -41,7 +41,7 @@ drive=drive-scsi0-0-0-0,id=scsi0-0-0-0,write-cache=on \
 -drive file=/dev/virtio,format=raw,if=none,id=drive-virtio-disk0,cache=none \
 -device virtio-blk-pci,scsi=off,bus=pci.0,addr=0x3,share-rw=on,\
 drive=drive-virtio-disk0,id=virtio-disk0,write-cache=on \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x4 \
+-device virtio-memballoon \
 -sandbox on,obsolete=deny,elevateprivileges=deny,spawn=deny,\
 resourcecontrol=deny \
 -msg timestamp=on

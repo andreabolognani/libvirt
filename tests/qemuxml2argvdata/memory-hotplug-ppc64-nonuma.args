@@ -31,4 +31,4 @@ server,nowait \
 -initrd /media/ram/ramdisk \
 -append 'root=/dev/ram rw console=ttyS0,115200' \
 -usb \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x2
+-device virtio-memballoon

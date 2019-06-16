@@ -37,4 +37,4 @@ throttling.bps-read-max=6000,throttling.bps-write-max=6500,\
 throttling.iops-read-max=7000,throttling.iops-write-max=7500,\
 throttling.iops-size=2000,throttling.group=libvirt_iotune_group2 \
 -device ide-hd,bus=ide.0,unit=1,drive=drive-ide0-0-1,id=ide0-0-1 \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x3
+-device virtio-memballoon

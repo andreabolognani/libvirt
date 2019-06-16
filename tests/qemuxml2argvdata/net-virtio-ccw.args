@@ -29,4 +29,4 @@ devno=fe.0.0001 \
 -netdev user,id=hostnet1 \
 -device virtio-net-ccw,netdev=hostnet1,id=net1,mac=00:11:22:33:44:54,\
 devno=fe.0.0000 \
--device virtio-balloon-ccw,id=balloon0,devno=fe.0.000a
+-device virtio-memballoon

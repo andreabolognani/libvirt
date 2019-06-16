@@ -40,7 +40,7 @@ path=/path/to/qemu-pr-helper.sock \
 format=raw,if=none,id=drive-scsi0-0-0-1 \
 -device scsi-block,bus=scsi0.0,channel=0,scsi-id=0,lun=1,\
 drive=drive-scsi0-0-0-1,id=scsi0-0-0-1 \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x4 \
+-device virtio-memballoon \
 -sandbox on,obsolete=deny,elevateprivileges=deny,spawn=deny,\
 resourcecontrol=deny \
 -msg timestamp=on

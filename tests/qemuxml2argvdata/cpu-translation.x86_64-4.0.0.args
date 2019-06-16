@@ -30,7 +30,7 @@ kvm_pv_unhalt=on \
 -no-acpi \
 -boot strict=on \
 -device piix3-usb-uhci,id=usb,bus=pci.0,addr=0x1.0x2 \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x2 \
+-device virtio-memballoon \
 -sandbox on,obsolete=deny,elevateprivileges=deny,spawn=deny,\
 resourcecontrol=deny \
 -msg timestamp=on

@@ -25,6 +25,6 @@ server,nowait \
 -no-shutdown \
 -no-acpi \
 -usb \
--device virtio-balloon-pci,id=balloon0,bus=pci.0,addr=0x3 \
+-device virtio-memballoon \
 -object rng-random,id=objrng0,filename=/dev/random \
 -device virtio-rng-pci,rng=objrng0,id=rng0,bus=pci.0,addr=0x7
