@@ -10,6 +10,7 @@ NIB_BUILDFILES = \
 	$(NULL)
 NIB_SOURCEFILES = \
 	$(wildcard $(NIB_SOURCEDIR)/*.rs) \
+	$(wildcard $(NIB_SOURCEDIR)/devices/*.rs) \
 	$(wildcard $(NIB_SOURCEDIR)/capi/*.rs) \
 	$(NULL)
 NIB_INCLUDEFILES = \
