@@ -10,6 +10,7 @@ VIRTBLOCKS_BUILDFILES = \
 	$(NULL)
 VIRTBLOCKS_SOURCEFILES = \
 	$(wildcard $(VIRTBLOCKS_SOURCEDIR)/*.rs) \
+	$(wildcard $(VIRTBLOCKS_SOURCEDIR)/devices/*.rs) \
 	$(wildcard $(VIRTBLOCKS_SOURCEDIR)/capi/*.rs) \
 	$(NULL)
 VIRTBLOCKS_INCLUDEFILES = \
