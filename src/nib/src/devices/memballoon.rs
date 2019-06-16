@@ -1,3 +1,4 @@
+#[repr(C)]
 #[derive(Copy, Clone)]
 pub enum MemballoonModel {
     None,
@@ -6,6 +7,7 @@ pub enum MemballoonModel {
     VirtIOTransitional,
 }
 
+#[repr(C)]
 pub struct Memballoon {
     model: MemballoonModel,
 }
