@@ -17,6 +17,7 @@ libvirt_rust_la_SOURCES = \
 	$(NULL)
 libvirt_rust_la_CFLAGS = \
 	$(VIRTBLOCKS_CFLAGS) \
+	$(LIBXML_CFLAGS) \
 	$(NULL)
 libvirt_rust_la_LIBADD = \
 	$(VIRTBLOCKS_LIBS) \
