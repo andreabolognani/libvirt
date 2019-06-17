@@ -129,6 +129,10 @@ include secret/Makefile.inc.am
 include storage/Makefile.inc.am
 include remote/Makefile.inc.am
 
+include rust/Makefile.def.inc.am
+include rust/Makefile.build.inc.am
+clean-local: rust-clean-local
+
 
 THREAD_LIBS = $(LIB_PTHREAD) $(LTLIBMULTITHREAD)
 

@@ -69,6 +69,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+#include "rust/rust.h"
+
 #define VIR_FROM_THIS VIR_FROM_QEMU
 
 VIR_LOG_INIT("qemu.qemu_command");
@@ -4116,36 +4118,25 @@ qemuBuildWatchdogCommandLine(virCommandPtr cmd,
 static int
 qemuBuildMemballoonCommandLine(virCommandPtr cmd,
                                const virDomainDef *def,
-                               virQEMUCapsPtr qemuCaps)
+                               virQEMUCapsPtr qemuCaps ATTRIBUTE_UNUSED)
 {
-    VIR_AUTOCLEAN(virBuffer) buf = VIR_BUFFER_INITIALIZER;
+    VIR_AUTOPTR(VirtBlocksDevicesMemballoon) memballoon = NULL;
+    VIR_AUTOFREE(char *) device = NULL;
 
     if (!virDomainDefHasMemballoon(def))
         return 0;
 
-    if (qemuBuildVirtioDevStr(&buf, "virtio-balloon", qemuCaps,
-                              VIR_DOMAIN_DEVICE_MEMBALLOON,
-                              def->memballoon) < 0) {
-        return -1;
-    }
-
-    virBufferAsprintf(&buf, ",id=%s", def->memballoon->info.alias);
-    if (qemuBuildDeviceAddressStr(&buf, def, &def->memballoon->info, qemuCaps) < 0)
+    if (virDomainMemballoonConvertToVirtBlocks(def->memballoon, &memballoon) < 0)
         return -1;
 
-    if (def->memballoon->autodeflate != VIR_TRISTATE_SWITCH_ABSENT) {
-        virBufferAsprintf(&buf, ",deflate-on-oom=%s",
-                          virTristateSwitchTypeToString(def->memballoon->autodeflate));
-    }
+    if (virtblocks_devices_memballoon_get_model(memballoon) == VIRTBLOCKS_DEVICES_MEMBALLOON_MODEL_NONE)
+        return 0;
 
-    if (qemuBuildVirtioOptionsStr(&buf, def->memballoon->virtio, qemuCaps) < 0)
-        return -1;
-
-    if (qemuCommandAddExtDevice(cmd, &def->memballoon->info) < 0)
-        return -1;
+    device = virtblocks_devices_memballoon_to_str(memballoon);
 
     virCommandAddArg(cmd, "-device");
-    virCommandAddArgBuffer(cmd, &buf);
+    virCommandAddArg(cmd, device);
+
     return 0;
 }
 
