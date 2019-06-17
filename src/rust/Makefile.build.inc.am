@@ -2,7 +2,8 @@
 
 $(NIB_LIBRARYFILES): $(NIB_BUILDFILES) $(NIB_SOURCEFILES)
 	cd $(NIB_TOPDIR) && \
-	cargo build
+	cargo build && \
+	ar d target/debug/libnib.a clzsi2.o
 
 rust-clean-local:
 	cd $(NIB_TOPDIR) && \
