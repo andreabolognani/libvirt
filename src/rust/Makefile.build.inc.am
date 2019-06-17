@@ -2,7 +2,8 @@
 
 $(VIRTBLOCKS_LIBRARYFILES): $(VIRTBLOCKS_BUILDFILES) $(VIRTBLOCKS_SOURCEFILES)
 	cd $(VIRTBLOCKS_TOPDIR) && \
-	cargo build
+	cargo build &&
+	ar d target/debug/libvirtblocks.a clzsi2.o
 
 rust-clean-local:
 	cd $(VIRTBLOCKS_TOPDIR) && \
