@@ -1,0 +1,27 @@
+# vim: filetype=automake
+
+NIB_TOPDIR = $(top_srcdir)/src/nib
+NIB_SOURCEDIR = $(NIB_TOPDIR)/src
+NIB_INCLUDEDIR = $(NIB_SOURCEDIR)/capi
+NIB_LIBRARYDIR = $(NIB_TOPDIR)/target/debug
+
+NIB_BUILDFILES = \
+	$(NIB_TOPDIR)/Cargo.toml \
+	$(NULL)
+NIB_SOURCEFILES = \
+	$(wildcard $(NIB_SOURCEDIR)/*.rs) \
+	$(wildcard $(NIB_SOURCEDIR)/capi/*.rs) \
+	$(NULL)
+NIB_INCLUDEFILES = \
+	$(wildcard $(NIB_INCLUDESDIR)/capi/*.h) \
+	$(NULL)
+NIB_LIBRARYFILES = \
+	$(NIB_LIBRARYDIR)/libnib.a \
+	$(NULL)
+
+NIB_CFLAGS = \
+	-I$(NIB_INCLUDEDIR) \
+	$(NULL)
+NIB_LIBS = \
+	$(NIB_LIBRARYFILES) \
+	$(NULL)
