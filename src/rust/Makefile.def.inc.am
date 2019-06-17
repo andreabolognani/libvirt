@@ -16,7 +16,7 @@ NIB_INCLUDEFILES = \
 	$(wildcard $(NIB_INCLUDESDIR)/capi/*.h) \
 	$(NULL)
 NIB_LIBRARYFILES = \
-	$(NIB_LIBRARYDIR)/libnib.a \
+	$(NIB_LIBRARYDIR)/libnib.la \
 	$(NULL)
 
 NIB_CFLAGS = \
