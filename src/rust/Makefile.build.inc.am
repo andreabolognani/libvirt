@@ -1,0 +1,23 @@
+# vim: filetype=automake
+
+$(VIRTBLOCKS_LIBRARYFILES): $(VIRTBLOCKS_BUILDFILES) $(VIRTBLOCKS_SOURCEFILES)
+	cd $(VIRTBLOCKS_TOPDIR) && \
+	cargo build
+
+rust-clean-local:
+	cd $(VIRTBLOCKS_TOPDIR) && \
+	cargo clean
+
+noinst_LTLIBRARIES += libvirt_rust.la
+
+libvirt_rust_la_SOURCES = \
+	rust/rust.h \
+	rust/rust.c \
+	$(VIRTBLOCKS_INCLUDEFILES) \
+	$(NULL)
+libvirt_rust_la_CFLAGS = \
+	$(VIRTBLOCKS_CFLAGS) \
+	$(NULL)
+libvirt_rust_la_LIBADD = \
+	$(VIRTBLOCKS_LIBS) \
+	$(NULL)
