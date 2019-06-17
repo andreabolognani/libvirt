@@ -18,6 +18,7 @@ libvirt_rust_la_SOURCES = \
 	$(NULL)
 libvirt_rust_la_CFLAGS = \
 	$(NIB_CFLAGS) \
+	$(LIBXML_CFLAGS) \
 	$(NULL)
 libvirt_rust_la_LIBADD = \
 	$(NIB_LIBS) \
