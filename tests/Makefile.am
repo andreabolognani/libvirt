@@ -207,7 +207,6 @@ test_programs = virshtest sockettest \
 	virtypedparamtest \
 	vshtabletest \
 	virerrortest \
-	virtblockstest \
 	$(NULL)
 
 test_libraries = libshunload.la \
@@ -995,8 +994,15 @@ virerrortest_SOURCES = \
 	testutils.c testutils.h
 virerrortest_LDADD = $(LDADDS)
 
-include $(top_srcdir)/src/rust/Makefile.def.inc.am
+if WITH_VIRTBLOCKS
 
+if WITH_VIRTBLOCKS_RUST
+include $(top_srcdir)/src/rust/Makefile.def.inc.am
+endif WITH_VIRTBLOCKS_RUST
+
+test_programs += \
+	virtblockstest \
+	$(NULL)
 virtblockstest_SOURCES = \
 	testutils.h \
 	testutils.c \
@@ -1008,8 +1014,15 @@ virtblockstest_CFLAGS = \
 	$(NULL)
 virtblockstest_LDADD = \
 	$(LDADDS) \
+	$(NULL)
+
+if WITH_VIRTBLOCKS_RUST
+virtblockstest_LDADD += \
 	../src/libvirt_rust.la \
 	$(NULL)
+endif WITH_VIRTBLOCKS_RUST
+
+endif WITH_VIRTBLOCKS
 
 vshtabletest_SOURCES = \
 	vshtabletest.c \

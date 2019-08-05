@@ -93,7 +93,6 @@ libvirt_driver_qemu_impl_la_CFLAGS = \
 	$(LIBNL_CFLAGS) \
 	$(SELINUX_CFLAGS) \
 	$(XDR_CFLAGS) \
-	$(VIRTBLOCKS_CFLAGS) \
 	-I$(srcdir)/access \
 	-I$(srcdir)/conf \
 	-I$(srcdir)/secret \
@@ -106,12 +105,26 @@ libvirt_driver_qemu_impl_la_LIBADD = \
 	$(LIBNL_LIBS) \
 	$(SELINUX_LIBS) \
 	$(LIBXML_LIBS) \
-	libvirt_rust.la \
 	$(NULL)
 libvirt_driver_qemu_impl_la_SOURCES = \
 	$(QEMU_DRIVER_SOURCES) \
+	$(NULL)
+
+if WITH_VIRTBLOCKS
+
+if WITH_VIRTBLOCKS_RUST
+libvirt_driver_qemu_impl_la_LIBADD += \
+	libvirt_rust.la \
+	$(NULL)
+endif WITH_VIRTBLOCKS_RUST
+
+libvirt_driver_qemu_impl_la_CFLAGS += \
+	$(VIRTBLOCKS_CFLAGS) \
+	$(NULL)
+libvirt_driver_qemu_impl_la_SOURCES += \
 	$(VIRTBLOCKS_INCLUDEFILES) \
 	$(NULL)
+endif WITH_VIRTBLOCKS
 
 if WITH_DTRACE_PROBES
 libvirt_driver_qemu_la_LIBADD += libvirt_qemu_probes.lo

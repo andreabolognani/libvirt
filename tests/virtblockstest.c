@@ -2,7 +2,11 @@
 
 #include "testutils.h"
 
-#include "rust/rust.h"
+#ifdef WITH_VIRTBLOCKS
+# ifdef WITH_VIRTBLOCKS_RUST
+#  include "rust/rust.h"
+# endif /* WITH_VIRTBLOCKS_RUST */
+#endif /* WITH_VIRTBLOCKS */
 
 typedef enum {
     FLAG_EXPECT_ERROR = 1 << 0,

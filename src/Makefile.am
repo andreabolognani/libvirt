@@ -129,9 +129,15 @@ include secret/Makefile.inc.am
 include storage/Makefile.inc.am
 include remote/Makefile.inc.am
 
+if WITH_VIRTBLOCKS
+
+if WITH_VIRTBLOCKS_RUST
 include rust/Makefile.def.inc.am
 include rust/Makefile.build.inc.am
 clean-local: rust-clean-local
+endif WITH_VIRTBLOCKS_RUST
+
+endif WITH_VIRTBLOCKS
 
 
 THREAD_LIBS = $(LIB_PTHREAD) $(LTLIBMULTITHREAD)
