@@ -18,7 +18,7 @@ typedef struct {
     const char *base;
     const char *ext;
     const char *expect;
-    int flags;
+    unsigned int flags;
 } testInfo;
 
 static int
