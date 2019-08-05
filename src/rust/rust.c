@@ -1,4 +1,4 @@
-#include "config.h"
+#include <config.h>
 
 #include "util/virerror.h"
 #include "virlog.h"
