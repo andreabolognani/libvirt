@@ -999,6 +999,10 @@ if WITH_VIRTBLOCKS_RUST
 include $(top_srcdir)/src/rust/Makefile.def.inc.am
 endif WITH_VIRTBLOCKS_RUST
 
+if WITH_VIRTBLOCKS_GOLANG
+include $(top_srcdir)/src/golang/Makefile.def.inc.am
+endif WITH_VIRTBLOCKS_GOLANG
+
 test_programs += \
 	virtblockstest \
 	$(NULL)
@@ -1020,6 +1024,12 @@ virtblockstest_LDADD += \
 	../src/libvirt_rust.la \
 	$(NULL)
 endif WITH_VIRTBLOCKS_RUST
+
+if WITH_VIRTBLOCKS_GOLANG
+virtblockstest_LDADD += \
+	../src/libvirt_golang.la \
+	$(NULL)
+endif WITH_VIRTBLOCKS_GOLANG
 
 endif WITH_VIRTBLOCKS
 

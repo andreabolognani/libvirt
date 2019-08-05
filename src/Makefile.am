@@ -137,6 +137,12 @@ include rust/Makefile.build.inc.am
 clean-local: rust-clean-local
 endif WITH_VIRTBLOCKS_RUST
 
+if WITH_VIRTBLOCKS_GOLANG
+include golang/Makefile.def.inc.am
+include golang/Makefile.build.inc.am
+clean-local: golang-clean-local
+endif WITH_VIRTBLOCKS_GOLANG
+
 endif WITH_VIRTBLOCKS
 
 
