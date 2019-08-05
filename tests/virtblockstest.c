@@ -6,6 +6,9 @@
 # ifdef WITH_VIRTBLOCKS_RUST
 #  include "rust/rust.h"
 # endif /* WITH_VIRTBLOCKS_RUST */
+# ifdef WITH_VIRTBLOCKS_GOLANG
+#  include "golang/golang.h"
+# endif /* WITH_VIRTBLOCKS_GOLANG */
 #endif /* WITH_VIRTBLOCKS */
 
 typedef enum {
