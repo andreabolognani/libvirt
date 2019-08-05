@@ -1027,6 +1027,7 @@ endif WITH_VIRTBLOCKS_RUST
 
 if WITH_VIRTBLOCKS_GOLANG
 virtblockstest_LDADD += \
+	$(VIRTBLOCKS_LIBS) \
 	../src/libvirt_golang.la \
 	$(NULL)
 endif WITH_VIRTBLOCKS_GOLANG
