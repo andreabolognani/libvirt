@@ -22,6 +22,9 @@ typedef struct {
 #ifdef WITH_VIRTBLOCKS_RUST
     VirtBlocksDevicesMemballoonModel model;
 #endif /* WITH_VIRTBLOCKS_RUST */
+#ifdef WITH_VIRTBLOCKS_GOLANG
+    int model;
+#endif /* WITH_VIRTBLOCKS_GOLANG */
     const char *base;
     const char *ext;
     const char *expect;
@@ -72,12 +75,16 @@ testVirtBlocksUtilBuildFileName(const void *opaque)
 #define DO_TEST_FILENAME(_base, _ext, _expect) \
     DO_TEST_FILENAME_FULL(_base, _ext, _expect, 0)
 
-#ifdef WITH_VIRTBLOCKS_RUST
 static int
 testVirtBlocksDevicesMemballoon(const void *opaque)
 {
     testInfo *info = (testInfo *) opaque;
+#ifdef WITH_VIRTBLOCKS_RUST
     VIR_AUTOPTR(VirtBlocksDevicesMemballoon) memballoon = NULL;
+#endif /* WITH_VIRTBLOCKS_RUST */
+#ifdef WITH_VIRTBLOCKS_GOLANG
+    int memballoon;
+#endif /* WITH_VIRTBLOCKS_GOLANG */
     VIR_AUTOFREE(char *) actual = NULL;
 
     memballoon = virtblocks_devices_memballoon_new();
@@ -95,7 +102,7 @@ testVirtBlocksDevicesMemballoon(const void *opaque)
     return 0;
 }
 
-# define DO_TEST_BALLOON_FULL(_model, _expect, _flags) \
+#define DO_TEST_BALLOON_FULL(_model, _expect, _flags) \
     do { \
         testInfo info = { \
             .model = _model, \
@@ -108,9 +115,8 @@ testVirtBlocksDevicesMemballoon(const void *opaque)
         } \
     } while (0);
 
-# define DO_TEST_BALLOON(_model, _expect) \
+#define DO_TEST_BALLOON(_model, _expect) \
     DO_TEST_BALLOON_FULL(_model, _expect, 0)
-#endif /* WITH_VIRTBLOCKS_RUST */
 
 static int
 mymain(void)
@@ -130,6 +136,12 @@ mymain(void)
     DO_TEST_BALLOON(VIRTBLOCKS_DEVICES_MEMBALLOON_MODEL_VIRTIO_TRANSITIONAL,
                     "virtio-memballoon-transitional");
 #endif /* WITH_VIRTBLOCKS_RUST */
+#ifdef WITH_VIRTBLOCKS_GOLANG
+    DO_TEST_BALLOON(0, "");
+    DO_TEST_BALLOON(1, "virtio-memballoon");
+    DO_TEST_BALLOON(2, "virtio-memballoon-non-transitional");
+    DO_TEST_BALLOON(3, "virtio-memballoon-transitional");
+#endif /* WITH_VIRTBLOCKS_GOLANG */
 
     return ret == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
 }
