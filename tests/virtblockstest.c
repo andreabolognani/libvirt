@@ -17,12 +17,7 @@ typedef enum {
 } testFlags;
 
 typedef struct {
-#ifdef WITH_VIRTBLOCKS_RUST
     VirtBlocksDevicesMemballoonModel model;
-#endif /* WITH_VIRTBLOCKS_RUST */
-#ifdef WITH_VIRTBLOCKS_GOLANG
-    int model;
-#endif /* WITH_VIRTBLOCKS_GOLANG */
     const char *base;
     const char *ext;
     const char *expect;
@@ -79,7 +74,7 @@ testVirtBlocksDevicesMemballoon(const void *opaque)
     VIR_AUTOPTR(VirtBlocksDevicesMemballoon) memballoon = NULL;
 #endif /* WITH_VIRTBLOCKS_RUST */
 #ifdef WITH_VIRTBLOCKS_GOLANG
-    int memballoon;
+    VirtBlocksDevicesMemballoon memballoon;
 #endif /* WITH_VIRTBLOCKS_GOLANG */
     VIR_AUTOFREE(char *) actual = NULL;
 
@@ -123,7 +118,6 @@ mymain(void)
     DO_TEST_FILENAME_FAILURE("one", "two", "three");
     DO_TEST_FILENAME("guest", ".xml", "guest.xml");
 
-#ifdef WITH_VIRTBLOCKS_RUST
     DO_TEST_BALLOON(VIRTBLOCKS_DEVICES_MEMBALLOON_MODEL_NONE, "");
     DO_TEST_BALLOON(VIRTBLOCKS_DEVICES_MEMBALLOON_MODEL_VIRTIO,
                     "virtio-memballoon");
@@ -131,13 +125,6 @@ mymain(void)
                     "virtio-memballoon-non-transitional");
     DO_TEST_BALLOON(VIRTBLOCKS_DEVICES_MEMBALLOON_MODEL_VIRTIO_TRANSITIONAL,
                     "virtio-memballoon-transitional");
-#endif /* WITH_VIRTBLOCKS_RUST */
-#ifdef WITH_VIRTBLOCKS_GOLANG
-    DO_TEST_BALLOON(0, "");
-    DO_TEST_BALLOON(1, "virtio-memballoon");
-    DO_TEST_BALLOON(2, "virtio-memballoon-non-transitional");
-    DO_TEST_BALLOON(3, "virtio-memballoon-transitional");
-#endif /* WITH_VIRTBLOCKS_GOLANG */
 
     return ret == 0 ? EXIT_SUCCESS : EXIT_FAILURE;
 }
