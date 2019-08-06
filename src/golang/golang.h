@@ -32,3 +32,6 @@
 
 #define VIR_AUTOGOLANG(type) \
     __attribute__((cleanup(VIR_AUTOGOLANG_FUNC_NAME(type)))) type
+
+VIR_DEFINE_AUTOGOLANG_FUNC(VirtBlocksDevicesMemballoon,
+                           virtblocks_devices_memballoon_free);

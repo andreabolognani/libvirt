@@ -74,7 +74,7 @@ testVirtBlocksDevicesMemballoon(const void *opaque)
     VIR_AUTOPTR(VirtBlocksDevicesMemballoon) memballoon = NULL;
 #endif /* WITH_VIRTBLOCKS_RUST */
 #ifdef WITH_VIRTBLOCKS_GOLANG
-    VirtBlocksDevicesMemballoon memballoon;
+    VIR_AUTOGOLANG(VirtBlocksDevicesMemballoon) memballoon = 0;
 #endif /* WITH_VIRTBLOCKS_GOLANG */
     VIR_AUTOFREE(char *) actual = NULL;
 
