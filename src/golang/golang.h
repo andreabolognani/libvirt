@@ -21,3 +21,14 @@
 #pragma once
 
 #include "virtblocks.h"
+
+#define VIR_AUTOGOLANG_FUNC_NAME(type) type##AutoGolang
+
+#define VIR_DEFINE_AUTOGOLANG_FUNC(type, func) \
+    static inline void VIR_AUTOGOLANG_FUNC_NAME(type)(type *_goref) \
+    { \
+        (func)(*_goref); \
+    }
+
+#define VIR_AUTOGOLANG(type) \
+    __attribute__((cleanup(VIR_AUTOGOLANG_FUNC_NAME(type)))) type
