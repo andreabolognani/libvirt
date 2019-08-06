@@ -5,11 +5,9 @@
 #ifdef WITH_VIRTBLOCKS
 # ifdef WITH_VIRTBLOCKS_RUST
 #  include "rust/rust.h"
-#  define CONST_CSTRING(x) (x)
 # endif /* WITH_VIRTBLOCKS_RUST */
 # ifdef WITH_VIRTBLOCKS_GOLANG
 #  include "golang/golang.h"
-#  define CONST_CSTRING(x) ((char *) x)
 # endif /* WITH_VIRTBLOCKS_GOLANG */
 #endif /* WITH_VIRTBLOCKS */
 
@@ -37,9 +35,7 @@ testVirtBlocksUtilBuildFileName(const void *opaque)
     testInfo *info = (testInfo *) opaque;
     VIR_AUTOFREE(char *) actual = NULL;
 
-    if (virtblocks_util_build_file_name(&actual,
-                                        CONST_CSTRING(info->base),
-                                        CONST_CSTRING(info->ext)) < 0) {
+    if (virtblocks_util_build_file_name(&actual, info->base, info->ext) < 0) {
         if (!(info->flags & FLAG_EXPECT_ERROR))
             return -1;
     }
