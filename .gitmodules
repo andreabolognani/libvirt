@@ -6,4 +6,4 @@
 	url = https://gitlab.com/keycodemap/keycodemapdb.git
 [submodule "virtblocks"]
 	path = src/virtblocks
-	url = https://gitlab.com/virtblocks/virtblocks.git
+	url = https://github.com/virtblocks/virtblocks.git
