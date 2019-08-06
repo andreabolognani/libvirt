@@ -2,11 +2,11 @@
 
 $(VIRTBLOCKS_LIBRARYFILES): $(VIRTBLOCKS_BUILDFILES) $(VIRTBLOCKS_SOURCEFILES)
 	cd $(VIRTBLOCKS_LIBRARYDIR) && \
-	go build -buildmode c-archive -o libvirtblocks.a capi.go
+	make
 
 golang-clean-local:
 	cd $(VIRTBLOCKS_LIBRARYDIR) && \
-	rm -f libvirtblocks.*
+	make clean
 
 noinst_LTLIBRARIES += libvirt_golang.la
 
