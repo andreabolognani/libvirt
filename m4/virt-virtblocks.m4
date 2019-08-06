@@ -12,7 +12,7 @@ AC_DEFUN([LIBVIRT_CHECK_VIRTBLOCKS], [
       AC_DEFINE_UNQUOTED([WITH_VIRTBLOCKS_GOLANG], 1, [Virt Blocks with Go])
       AC_DEFINE_UNQUOTED([WITH_VIRTBLOCKS], 1, [Virt Blocks])
       ;;
-    no) ;;
+    no) AC_MSG_ERROR([missing Virt Blocks selection]) ;;
     *) AC_MSG_ERROR([invalid Virt Blocks selection]) ;;
   esac
   AM_CONDITIONAL([WITH_VIRTBLOCKS_RUST], [test "$with_virtblocks" = "rust"])
