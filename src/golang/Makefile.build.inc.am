@@ -17,6 +17,7 @@ libvirt_golang_la_SOURCES = \
 	$(NULL)
 libvirt_golang_la_CFLAGS = \
 	$(VIRTBLOCKS_CFLAGS) \
+	$(LIBXML_CFLAGS) \
 	$(NULL)
 libvirt_golang_la_LIBADD = \
 	$(VIRTBLOCKS_LIBS) \

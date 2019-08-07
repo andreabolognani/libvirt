@@ -21,6 +21,7 @@
 #pragma once
 
 #include "virtblocks.h"
+#include "conf/domain_conf.h"
 
 #define VIR_AUTOGOLANG_FUNC_NAME(type) type##AutoGolang
 
@@ -41,3 +42,6 @@
 
 VIR_DEFINE_AUTOGOLANG_FUNC(VirtBlocksDevicesMemballoon,
                            virtblocks_devices_memballoon_free);
+
+int virDomainMemballoonConvertToVirtBlocks(virDomainMemballoonDef *from,
+                                           VirtBlocksDevicesMemballoon *to);
