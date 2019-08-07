@@ -14,7 +14,7 @@ VIRTBLOCKS_SOURCEFILES = \
 	$(wildcard $(VIRTBLOCKS_SOURCEDIR)/capi/*.rs) \
 	$(NULL)
 VIRTBLOCKS_INCLUDEFILES = \
-	$(wildcard $(VIRTBLOCKS_INCLUDESDIR)/capi/*.h) \
+	$(wildcard $(VIRTBLOCKS_INCLUDEDIR)/capi/*.h) \
 	$(NULL)
 VIRTBLOCKS_LIBRARYFILES = \
 	$(VIRTBLOCKS_LIBRARYDIR)/libvirtblocks.la \
