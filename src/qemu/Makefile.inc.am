@@ -118,6 +118,12 @@ libvirt_driver_qemu_impl_la_LIBADD += \
 	$(NULL)
 endif WITH_VIRTBLOCKS_RUST
 
+if WITH_VIRTBLOCKS_GOLANG
+libvirt_driver_qemu_impl_la_LIBADD += \
+	libvirt_golang.la \
+	$(NULL)
+endif WITH_VIRTBLOCKS_GOLANG
+
 libvirt_driver_qemu_impl_la_CFLAGS += \
 	$(VIRTBLOCKS_CFLAGS) \
 	$(NULL)

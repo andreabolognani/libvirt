@@ -73,6 +73,9 @@
 # ifdef WITH_VIRTBLOCKS_RUST
 #  include "rust/rust.h"
 # endif /* WITH_VIRTBLOCKS_RUST */
+# ifdef WITH_VIRTBLOCKS_GOLANG
+#  include "golang/golang.h"
+# endif /* WITH_VIRTBLOCKS_GOLANG */
 #endif /* WITH_VIRTBLOCKS */
 
 #define VIR_FROM_THIS VIR_FROM_QEMU
@@ -4119,13 +4122,18 @@ qemuBuildWatchdogCommandLine(virCommandPtr cmd,
 }
 
 
-#ifdef WITH_VIRTBLOCKS_RUST
+#ifdef WITH_VIRTBLOCKS
 static int
 qemuBuildMemballoonCommandLine(virCommandPtr cmd,
                                const virDomainDef *def,
                                virQEMUCapsPtr qemuCaps ATTRIBUTE_UNUSED)
 {
+#ifdef WITH_VIRTBLOCKS_RUST
     VIR_AUTOPTR(VirtBlocksDevicesMemballoon) memballoon = NULL;
+#endif /* WITH_VIRTBLOCKS_RUST */
+#ifdef WITH_VIRTBLOCKS_GOLANG
+    VIR_AUTOGOLANG(VirtBlocksDevicesMemballoon) memballoon = 0;
+#endif /* WITH_VIRTBLOCKS_GOLANG */
     VIR_AUTOFREE(char *) device = NULL;
 
     if (!virDomainDefHasMemballoon(def))
@@ -4144,7 +4152,7 @@ qemuBuildMemballoonCommandLine(virCommandPtr cmd,
 
     return 0;
 }
-#else /* ! WITH_VIRTBLOCKS_RUST */
+#else /* ! WITH_VIRTBLOCKS */
 static int
 qemuBuildMemballoonCommandLine(virCommandPtr cmd ATTRIBUTE_UNUSED,
                                const virDomainDef *def ATTRIBUTE_UNUSED,
