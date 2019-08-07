@@ -33,5 +33,11 @@
 #define VIR_AUTOGOLANG(type) \
     __attribute__((cleanup(VIR_AUTOGOLANG_FUNC_NAME(type)))) type
 
+#define VIR_STEAL_GOLANG(a, b) \
+    do { \
+        (a) = (b); \
+        (b) = 0; \
+    } while (0)
+
 VIR_DEFINE_AUTOGOLANG_FUNC(VirtBlocksDevicesMemballoon,
                            virtblocks_devices_memballoon_free);
