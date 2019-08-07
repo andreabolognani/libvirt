@@ -6,13 +6,13 @@ VIRTBLOCKS_INCLUDEDIR = $(VIRTBLOCKS_TOPDIR)/capi
 VIRTBLOCKS_LIBRARYDIR = $(VIRTBLOCKS_TOPDIR)/capi
 
 VIRTBLOCKS_BUILDFILES = \
-	$(wildcard $(VIRTBLOCKS_SOURCEDIR)/capi/Makefile) \
+	$(wildcard $(VIRTBLOCKS_SOURCEDIR)/Makefile) \
+	$(wildcard $(VIRTBLOCKS_SOURCEDIR)/mod.go) \
 	$(NULL)
 VIRTBLOCKS_SOURCEFILES = \
-	$(wildcard $(VIRTBLOCKS_SOURCEDIR)/*.go) \
 	$(wildcard $(VIRTBLOCKS_SOURCEDIR)/capi/*.go) \
-	$(wildcard $(VIRTBLOCKS_SOURCEDIR)/devices/*.go) \
-	$(wildcard $(VIRTBLOCKS_SOURCEDIR)/util/*.go) \
+	$(wildcard $(VIRTBLOCKS_SOURCEDIR)/pkg/devices/*.go) \
+	$(wildcard $(VIRTBLOCKS_SOURCEDIR)/pkg/util/*.go) \
 	$(NULL)
 VIRTBLOCKS_INCLUDEFILES = \
 	$(wildcard $(VIRTBLOCKS_INCLUDEDIR)/*.h) \

@@ -1,11 +1,11 @@
 # vim: filetype=automake
 
 $(VIRTBLOCKS_LIBRARYFILES): $(VIRTBLOCKS_BUILDFILES) $(VIRTBLOCKS_SOURCEFILES)
-	cd $(VIRTBLOCKS_LIBRARYDIR) && \
+	cd $(VIRTBLOCKS_SOURCEDIR) && \
 	make
 
 golang-clean-local:
-	cd $(VIRTBLOCKS_LIBRARYDIR) && \
+	cd $(VIRTBLOCKS_SOURCEDIR) && \
 	make clean
 
 noinst_LTLIBRARIES += libvirt_golang.la
