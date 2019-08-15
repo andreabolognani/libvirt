@@ -10,6 +10,12 @@
 mkdir -p "$CI_CONT_BUILDDIR" || exit 1
 cd "$CI_CONT_BUILDDIR"
 
+# Old Go versions can't deal with having code outside $GOPATH, so we
+# need to mess around with symbolic links a bit
+export GOPATH="$HOME/go"
+mkdir -p "$GOPATH/src/github.com/virtblocks/"
+ln -sf "$CI_CONT_SRCDIR/src/virtblocks" "$GOPATH/src/github.com/virtblocks/"
+
 export VIR_TEST_DEBUG=1
 NOCONFIGURE=1 "$CI_CONT_SRCDIR/autogen.sh" || exit 1
 
