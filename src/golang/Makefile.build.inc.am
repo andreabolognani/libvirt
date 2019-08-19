@@ -2,11 +2,11 @@
 
 $(VIRTBLOCKS_LIBRARYFILES): $(VIRTBLOCKS_BUILDFILES) $(VIRTBLOCKS_SOURCEFILES)
 	cd $(VIRTBLOCKS_SOURCEDIR) && \
-	make
+	make build VIRTBLOCKS_LANGUAGE=golang
 
 golang-clean-local:
 	cd $(VIRTBLOCKS_SOURCEDIR) && \
-	make clean
+	make clean VIRTBLOCKS_LANGUAGE=golang
 
 noinst_LTLIBRARIES += libvirt_golang.la
 
