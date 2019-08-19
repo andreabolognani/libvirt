@@ -1,6 +1,9 @@
 # vim: filetype=automake
 
-$(VIRTBLOCKS_LIBRARYFILES): $(VIRTBLOCKS_BUILDFILES) $(VIRTBLOCKS_SOURCEFILES)
+$(VIRTBLOCKS_INCLUDEFILES) $(VIRTBLOCKS_LIBRARYFILES): golang-build-local
+	@true
+
+golang-build-local:
 	cd $(VIRTBLOCKS_SOURCEDIR) && \
 	$(MAKE) build VIRTBLOCKS_LANGUAGE=golang
 

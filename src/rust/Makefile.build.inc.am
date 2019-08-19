@@ -1,6 +1,9 @@
 # vim: filetype=automake
 
-$(VIRTBLOCKS_LIBRARYFILES): $(VIRTBLOCKS_BUILDFILES) $(VIRTBLOCKS_SOURCEFILES)
+$(VIRTBLOCKS_INCLUDEFILES) $(VIRTBLOCKS_LIBRARYFILES): rust-build-local
+	@true
+
+rust-build-local:
 	cd $(VIRTBLOCKS_TOPDIR) && \
 	$(MAKE) build VIRTBLOCKS_LANGUAGE=rust
 
