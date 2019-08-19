@@ -2,11 +2,11 @@
 
 $(VIRTBLOCKS_LIBRARYFILES): $(VIRTBLOCKS_BUILDFILES) $(VIRTBLOCKS_SOURCEFILES)
 	cd $(VIRTBLOCKS_TOPDIR) && \
-	make build VIRTBLOCKS_LANGUAGE=rust
+	$(MAKE) build VIRTBLOCKS_LANGUAGE=rust
 
 rust-clean-local:
 	cd $(VIRTBLOCKS_TOPDIR) && \
-	make clean VIRTBLOCKS_LANGUAGE=rust
+	$(MAKE) clean VIRTBLOCKS_LANGUAGE=rust
 
 noinst_LTLIBRARIES += libvirt_rust.la
 
