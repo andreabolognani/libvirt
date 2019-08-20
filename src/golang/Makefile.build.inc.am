@@ -26,6 +26,11 @@ libvirt_golang_la_LIBADD = \
 	$(VIRTBLOCKS_LIBS) \
 	$(NULL)
 
+VIRTBLOCKS_PHONY_TARGETS += \
+	golang-build-local \
+	golang-clean-local \
+	$(NULL)
+
 VIRTBLOCKS_CLEAN_TARGETS += \
 	golang-clean-local \
 	$(NULL)
