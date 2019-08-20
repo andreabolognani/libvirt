@@ -127,9 +127,6 @@ endif WITH_VIRTBLOCKS_GOLANG
 libvirt_driver_qemu_impl_la_CFLAGS += \
 	$(VIRTBLOCKS_CFLAGS) \
 	$(NULL)
-libvirt_driver_qemu_impl_la_SOURCES += \
-	$(VIRTBLOCKS_INCLUDEFILES) \
-	$(NULL)
 endif WITH_VIRTBLOCKS
 
 if WITH_DTRACE_PROBES
