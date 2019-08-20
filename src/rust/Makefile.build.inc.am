@@ -25,3 +25,7 @@ libvirt_rust_la_CFLAGS = \
 libvirt_rust_la_LIBADD = \
 	$(VIRTBLOCKS_LIBS) \
 	$(NULL)
+
+VIRTBLOCKS_CLEAN_TARGETS += \
+	rust-clean-local \
+	$(NULL)

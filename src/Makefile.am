@@ -129,21 +129,24 @@ include secret/Makefile.inc.am
 include storage/Makefile.inc.am
 include remote/Makefile.inc.am
 
+
+VIRTBLOCKS_CLEAN_TARGETS =
+
 if WITH_VIRTBLOCKS
 
 if WITH_VIRTBLOCKS_RUST
 include rust/Makefile.def.inc.am
 include rust/Makefile.build.inc.am
-clean-local: rust-clean-local
 endif WITH_VIRTBLOCKS_RUST
 
 if WITH_VIRTBLOCKS_GOLANG
 include golang/Makefile.def.inc.am
 include golang/Makefile.build.inc.am
-clean-local: golang-clean-local
 endif WITH_VIRTBLOCKS_GOLANG
 
 endif WITH_VIRTBLOCKS
+
+clean-local: $(VIRTBLOCKS_CLEAN_TARGETS)
 
 
 THREAD_LIBS = $(LIB_PTHREAD) $(LTLIBMULTITHREAD)

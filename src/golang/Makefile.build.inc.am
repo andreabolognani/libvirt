@@ -25,3 +25,7 @@ libvirt_golang_la_CFLAGS = \
 libvirt_golang_la_LIBADD = \
 	$(VIRTBLOCKS_LIBS) \
 	$(NULL)
+
+VIRTBLOCKS_CLEAN_TARGETS += \
+	golang-clean-local \
+	$(NULL)
