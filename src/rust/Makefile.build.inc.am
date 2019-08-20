@@ -1,13 +1,13 @@
 # vim: filetype=automake
 
-$(VIRTBLOCKS_INCLUDEFILES) $(VIRTBLOCKS_LIBRARYFILES): rust-build-local
+$(VIRTBLOCKS_INCLUDEFILES) $(VIRTBLOCKS_LIBRARYFILES): rust-build
 	@true
 
-rust-build-local:
+rust-build:
 	cd $(VIRTBLOCKS_TOPDIR) && \
 	$(MAKE) build VIRTBLOCKS_LANGUAGE=rust
 
-rust-clean-local:
+rust-clean:
 	cd $(VIRTBLOCKS_TOPDIR) && \
 	$(MAKE) clean VIRTBLOCKS_LANGUAGE=rust
 
@@ -27,10 +27,10 @@ libvirt_rust_la_LIBADD = \
 	$(NULL)
 
 VIRTBLOCKS_PHONY_TARGETS += \
-	rust-build-local \
-	rust-clean-local \
+	rust-build \
+	rust-clean \
 	$(NULL)
 
 VIRTBLOCKS_CLEAN_TARGETS += \
-	rust-clean-local \
+	rust-clean \
 	$(NULL)

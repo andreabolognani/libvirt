@@ -1,13 +1,13 @@
 # vim: filetype=automake
 
-$(VIRTBLOCKS_INCLUDEFILES) $(VIRTBLOCKS_LIBRARYFILES): golang-build-local
+$(VIRTBLOCKS_INCLUDEFILES) $(VIRTBLOCKS_LIBRARYFILES): golang-build
 	@true
 
-golang-build-local:
+golang-build:
 	cd $(VIRTBLOCKS_SOURCEDIR) && \
 	$(MAKE) build VIRTBLOCKS_LANGUAGE=golang
 
-golang-clean-local:
+golang-clean:
 	cd $(VIRTBLOCKS_SOURCEDIR) && \
 	$(MAKE) clean VIRTBLOCKS_LANGUAGE=golang
 
@@ -27,10 +27,10 @@ libvirt_golang_la_LIBADD = \
 	$(NULL)
 
 VIRTBLOCKS_PHONY_TARGETS += \
-	golang-build-local \
-	golang-clean-local \
+	golang-build \
+	golang-clean \
 	$(NULL)
 
 VIRTBLOCKS_CLEAN_TARGETS += \
-	golang-clean-local \
+	golang-clean \
 	$(NULL)
