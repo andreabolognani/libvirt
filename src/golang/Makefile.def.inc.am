@@ -10,6 +10,7 @@ VIRTBLOCKS_BUILDFILES = \
 	$(wildcard $(VIRTBLOCKS_SOURCEDIR)/mod.go) \
 	$(NULL)
 VIRTBLOCKS_SOURCEFILES = \
+	$(wildcard $(VIRTBLOCKS_SOURCEDIR)/capi/*.c) \
 	$(wildcard $(VIRTBLOCKS_SOURCEDIR)/capi/*.go) \
 	$(wildcard $(VIRTBLOCKS_SOURCEDIR)/pkg/devices/*.go) \
 	$(wildcard $(VIRTBLOCKS_SOURCEDIR)/pkg/util/*.go) \
