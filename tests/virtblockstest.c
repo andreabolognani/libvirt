@@ -81,7 +81,7 @@ testVirtBlocksDevicesMemballoon(const void *opaque)
     memballoon = virtblocks_devices_memballoon_new();
 
     virtblocks_devices_memballoon_set_model(memballoon, info->model);
-    actual = virtblocks_devices_memballoon_to_str(memballoon);
+    actual = virtblocks_devices_memballoon_to_string(memballoon);
 
     if (!STREQ_NULLABLE(info->expect, actual)) {
         virTestDifference(stderr, info->expect, actual);

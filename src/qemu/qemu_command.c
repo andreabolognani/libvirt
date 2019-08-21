@@ -4145,7 +4145,7 @@ qemuBuildMemballoonCommandLine(virCommandPtr cmd,
     if (virtblocks_devices_memballoon_get_model(memballoon) == VIRTBLOCKS_DEVICES_MEMBALLOON_MODEL_NONE)
         return 0;
 
-    device = virtblocks_devices_memballoon_to_str(memballoon);
+    device = virtblocks_devices_memballoon_to_string(memballoon);
 
     virCommandAddArg(cmd, "-device");
     virCommandAddArg(cmd, device);
