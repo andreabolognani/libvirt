@@ -1,7 +1,6 @@
 # vim: filetype=automake
 
 VIRTBLOCKS_TOPDIR = $(top_srcdir)/src/virtblocks/c/rust
-VIRTBLOCKS_SOURCEDIR = $(VIRTBLOCKS_TOPDIR)/src
 VIRTBLOCKS_INCLUDEDIR = $(VIRTBLOCKS_TOPDIR)
 VIRTBLOCKS_LIBRARYDIR = $(VIRTBLOCKS_TOPDIR)/target/debug
 
