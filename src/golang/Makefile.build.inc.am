@@ -4,12 +4,12 @@ $(VIRTBLOCKS_INCLUDEFILES) $(VIRTBLOCKS_LIBRARYFILES): golang-build
 	@true
 
 golang-build:
-	cd $(VIRTBLOCKS_SOURCEDIR) && \
-	$(MAKE) build VIRTBLOCKS_LANGUAGE=golang
+	cd $(VIRTBLOCKS_TOPDIR) && \
+	$(MAKE) build
 
 golang-clean:
-	cd $(VIRTBLOCKS_SOURCEDIR) && \
-	$(MAKE) clean VIRTBLOCKS_LANGUAGE=golang
+	cd $(VIRTBLOCKS_TOPDIR) && \
+	$(MAKE) clean
 
 noinst_LTLIBRARIES += libvirt_golang.la
 
