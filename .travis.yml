@@ -58,6 +58,14 @@ matrix:
         - PATH="/usr/local/opt/gettext/bin:/usr/local/opt/ccache/libexec:/usr/local/opt/rpcgen/bin:$PATH"
       script:
         - ./autogen.sh --prefix=$(pwd)/install-root --with-virtblocks=$VIRTBLOCKS && make -j3 && make -j3 install
+    - compiler: clang
+      language: c
+      os: osx
+      env:
+        - VIRTBLOCKS="golang"
+        - PATH="/usr/local/opt/gettext/bin:/usr/local/opt/ccache/libexec:/usr/local/opt/rpcgen/bin:$PATH"
+      script:
+        - ./autogen.sh --prefix=$(pwd)/install-root --with-virtblocks=$VIRTBLOCKS && make -j3 && make -j3 install
 
 git:
   submodules: true
