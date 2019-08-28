@@ -24,7 +24,7 @@
 # ifdef WITH_VIRTBLOCKS_RUST
 #  include "rust.h"
 # endif /* WITH_VIRTBLOCKS_RUST */
-# ifdef WITH_VIRTBLOCKS_GOLANG
-#  include "golang.h"
-# endif /* WITH_VIRTBLOCKS_GOLANG */
+# ifdef WITH_VIRTBLOCKS_GO
+#  include "go.h"
+# endif /* WITH_VIRTBLOCKS_GO */
 #endif /* WITH_VIRTBLOCKS */

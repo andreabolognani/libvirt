@@ -30,7 +30,7 @@ matrix:
         - docker
       env:
         - IMAGE="ubuntu-18"
-        - VIRTBLOCKS="golang"
+        - VIRTBLOCKS="go"
         - MAKE_ARGS="syntax-check check"
       script:
         - make -C ci/ ci-build@$IMAGE CI_CONFIGURE_ARGS="--with-virtblocks=$VIRTBLOCKS" CI_MAKE_ARGS="$MAKE_ARGS"
@@ -46,7 +46,7 @@ matrix:
         - docker
       env:
         - IMAGE="fedora-30"
-        - VIRTBLOCKS="golang"
+        - VIRTBLOCKS="go"
         - MAKE_ARGS="syntax-check check"
       script:
         - make -C ci/ ci-build@$IMAGE CI_CONFIGURE_ARGS="--with-virtblocks=$VIRTBLOCKS" CI_MAKE_ARGS="$MAKE_ARGS"
@@ -62,7 +62,7 @@ matrix:
       language: c
       os: osx
       env:
-        - VIRTBLOCKS="golang"
+        - VIRTBLOCKS="go"
         - PATH="/usr/local/opt/gettext/bin:/usr/local/opt/ccache/libexec:/usr/local/opt/rpcgen/bin:$PATH"
       script:
         - ./autogen.sh --prefix=$(pwd)/install-root --with-virtblocks=$VIRTBLOCKS && make -j3 && make -j3 install

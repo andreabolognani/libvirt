@@ -3,11 +3,11 @@
 #include "util/virerror.h"
 #include "virlog.h"
 
-#include "golang.h"
+#include "go.h"
 
-#define VIR_FROM_THIS VIR_FROM_GOLANG
+#define VIR_FROM_THIS VIR_FROM_GO
 
-VIR_LOG_INIT("golang");
+VIR_LOG_INIT("go");
 
 static VirtBlocksDevicesMemballoonModel modelTable[] = {
     VIRTBLOCKS_DEVICES_MEMBALLOON_MODEL_VIRTIO, /* VIR_DOMAIN_MEMBALLOON_MODEL_VIRTIO */
@@ -22,7 +22,7 @@ int
 virDomainMemballoonConvertToVirtBlocks(virDomainMemballoonDef *from,
                                        VirtBlocksDevicesMemballoon *to)
 {
-    VIR_AUTOGOLANG(VirtBlocksDevicesMemballoon) memballoon = 0;
+    VIR_AUTOGO(VirtBlocksDevicesMemballoon) memballoon = 0;
 
     memballoon = virtblocks_devices_memballoon_new();
 
@@ -43,7 +43,7 @@ virDomainMemballoonConvertToVirtBlocks(virDomainMemballoonDef *from,
             return -1;
     }
 
-    VIR_STEAL_GOLANG(*to, memballoon);
+    VIR_STEAL_GO(*to, memballoon);
 
     return 0;
 }

@@ -4124,9 +4124,9 @@ qemuBuildMemballoonCommandLine(virCommandPtr cmd,
 # ifdef WITH_VIRTBLOCKS_RUST
     VIR_AUTOPTR(VirtBlocksDevicesMemballoon) memballoon = NULL;
 # endif /* WITH_VIRTBLOCKS_RUST */
-# ifdef WITH_VIRTBLOCKS_GOLANG
-    VIR_AUTOGOLANG(VirtBlocksDevicesMemballoon) memballoon = 0;
-# endif /* WITH_VIRTBLOCKS_GOLANG */
+# ifdef WITH_VIRTBLOCKS_GO
+    VIR_AUTOGO(VirtBlocksDevicesMemballoon) memballoon = 0;
+# endif /* WITH_VIRTBLOCKS_GO */
     VIR_AUTOFREE(char *) device = NULL;
 
     if (!virDomainDefHasMemballoon(def))

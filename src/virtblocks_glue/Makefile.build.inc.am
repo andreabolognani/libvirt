@@ -19,13 +19,13 @@ libvirt_virtblocks_glue_la_SOURCES = \
 	$(NULL)
 endif WITH_VIRTBLOCKS_RUST
 
-if WITH_VIRTBLOCKS_GOLANG
+if WITH_VIRTBLOCKS_GO
 libvirt_virtblocks_glue_la_SOURCES = \
-	virtblocks_glue/golang.h \
-	virtblocks_glue/golang.c \
+	virtblocks_glue/go.h \
+	virtblocks_glue/go.c \
 	$(VIRTBLOCKS_INCLUDEFILES) \
 	$(NULL)
-endif WITH_VIRTBLOCKS_GOLANG
+endif WITH_VIRTBLOCKS_GO
 
 libvirt_virtblocks_glue_la_CFLAGS = \
 	$(VIRTBLOCKS_CFLAGS) \

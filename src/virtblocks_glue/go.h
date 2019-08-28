@@ -1,5 +1,5 @@
 /*
- * golang.h: Golang integration
+ * go.h: Go integration
  *
  * Copyright (C) 2019 Red Hat, Inc.
  *
@@ -23,24 +23,24 @@
 #include "virtblocks.h"
 #include "conf/domain_conf.h"
 
-#define VIR_AUTOGOLANG_FUNC_NAME(type) type##AutoGolang
+#define VIR_AUTOGO_FUNC_NAME(type) type##AutoGo
 
-#define VIR_DEFINE_AUTOGOLANG_FUNC(type, func) \
-    static inline void VIR_AUTOGOLANG_FUNC_NAME(type)(type *_goref) \
+#define VIR_DEFINE_AUTOGO_FUNC(type, func) \
+    static inline void VIR_AUTOGO_FUNC_NAME(type)(type *_goref) \
     { \
         (func)(*_goref); \
     }
 
-#define VIR_AUTOGOLANG(type) \
-    __attribute__((cleanup(VIR_AUTOGOLANG_FUNC_NAME(type)))) type
+#define VIR_AUTOGO(type) \
+    __attribute__((cleanup(VIR_AUTOGO_FUNC_NAME(type)))) type
 
-#define VIR_STEAL_GOLANG(a, b) \
+#define VIR_STEAL_GO(a, b) \
     do { \
         (a) = (b); \
         (b) = 0; \
     } while (0)
 
-VIR_DEFINE_AUTOGOLANG_FUNC(VirtBlocksDevicesMemballoon,
+VIR_DEFINE_AUTOGO_FUNC(VirtBlocksDevicesMemballoon,
                            virtblocks_devices_memballoon_free);
 
 int virDomainMemballoonConvertToVirtBlocks(virDomainMemballoonDef *from,
