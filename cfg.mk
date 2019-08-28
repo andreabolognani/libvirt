@@ -790,7 +790,7 @@ sc_prohibit_cross_inclusion:
 	    access/ | conf/) safe="($$dir|conf|util)";; \
 	    cpu/| network/| node_device/| rpc/| security/| storage/) \
 	      safe="($$dir|util|conf|storage)";; \
-	    *) safe="($$dir|$(mid_dirs)|util|rust|golang)";; \
+	    *) safe="($$dir|$(mid_dirs)|util|virtblocks_glue)";; \
 	  esac; \
 	  in_vc_files="^src/$$dir" \
 	  prohibit='^# *include .$(cross_dirs_re)' \

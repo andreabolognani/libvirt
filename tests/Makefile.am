@@ -994,14 +994,7 @@ virerrortest_SOURCES = \
 virerrortest_LDADD = $(LDADDS)
 
 if WITH_VIRTBLOCKS
-
-if WITH_VIRTBLOCKS_RUST
-include $(top_srcdir)/src/rust/Makefile.def.inc.am
-endif WITH_VIRTBLOCKS_RUST
-
-if WITH_VIRTBLOCKS_GOLANG
-include $(top_srcdir)/src/golang/Makefile.def.inc.am
-endif WITH_VIRTBLOCKS_GOLANG
+include $(top_srcdir)/src/virtblocks_glue/Makefile.def.inc.am
 
 test_programs += \
 	virtblockstest \
@@ -1019,18 +1012,9 @@ virtblockstest_LDADD = \
 	$(LDADDS) \
 	$(NULL)
 
-if WITH_VIRTBLOCKS_RUST
 virtblockstest_LDADD += \
-	../src/libvirt_rust.la \
+	../src/libvirt_virtblocks_glue.la \
 	$(NULL)
-endif WITH_VIRTBLOCKS_RUST
-
-if WITH_VIRTBLOCKS_GOLANG
-virtblockstest_LDADD += \
-	../src/libvirt_golang.la \
-	$(NULL)
-endif WITH_VIRTBLOCKS_GOLANG
-
 endif WITH_VIRTBLOCKS
 
 vshtabletest_SOURCES = \

@@ -69,14 +69,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-#ifdef WITH_VIRTBLOCKS
-# ifdef WITH_VIRTBLOCKS_RUST
-#  include "rust/rust.h"
-# endif /* WITH_VIRTBLOCKS_RUST */
-# ifdef WITH_VIRTBLOCKS_GOLANG
-#  include "golang/golang.h"
-# endif /* WITH_VIRTBLOCKS_GOLANG */
-#endif /* WITH_VIRTBLOCKS */
+#include "virtblocks_glue/virtblocks_glue.h"
 
 #define VIR_FROM_THIS VIR_FROM_QEMU
 

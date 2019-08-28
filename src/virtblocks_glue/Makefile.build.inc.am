@@ -1,0 +1,45 @@
+# vim: filetype=automake
+
+$(VIRTBLOCKS_INCLUDEFILES) $(VIRTBLOCKS_LIBRARYFILES): virtblocks-build
+	@true
+
+virtblocks-build:
+	$(MAKE) -C $(VIRTBLOCKS_TOPDIR) build
+
+virtblocks-clean:
+	$(MAKE) -C $(VIRTBLOCKS_TOPDIR) clean
+
+noinst_LTLIBRARIES += libvirt_virtblocks_glue.la
+
+if WITH_VIRTBLOCKS_RUST
+libvirt_virtblocks_glue_la_SOURCES = \
+	virtblocks_glue/rust.h \
+	virtblocks_glue/rust.c \
+	$(VIRTBLOCKS_INCLUDEFILES) \
+	$(NULL)
+endif WITH_VIRTBLOCKS_RUST
+
+if WITH_VIRTBLOCKS_GOLANG
+libvirt_virtblocks_glue_la_SOURCES = \
+	virtblocks_glue/golang.h \
+	virtblocks_glue/golang.c \
+	$(VIRTBLOCKS_INCLUDEFILES) \
+	$(NULL)
+endif WITH_VIRTBLOCKS_GOLANG
+
+libvirt_virtblocks_glue_la_CFLAGS = \
+	$(VIRTBLOCKS_CFLAGS) \
+	$(LIBXML_CFLAGS) \
+	$(NULL)
+libvirt_virtblocks_glue_la_LIBADD = \
+	$(VIRTBLOCKS_LIBS) \
+	$(NULL)
+
+VIRTBLOCKS_PHONY_TARGETS += \
+	virtblocks-build \
+	virtblocks-clean \
+	$(NULL)
+
+VIRTBLOCKS_CLEAN_TARGETS += \
+	virtblocks-clean \
+	$(NULL)

@@ -2,14 +2,7 @@
 
 #include "testutils.h"
 
-#ifdef WITH_VIRTBLOCKS
-# ifdef WITH_VIRTBLOCKS_RUST
-#  include "rust/rust.h"
-# endif /* WITH_VIRTBLOCKS_RUST */
-# ifdef WITH_VIRTBLOCKS_GOLANG
-#  include "golang/golang.h"
-# endif /* WITH_VIRTBLOCKS_GOLANG */
-#endif /* WITH_VIRTBLOCKS */
+#include "virtblocks_glue/virtblocks_glue.h"
 
 typedef enum {
     FLAG_EXPECT_ERROR = 1 << 0,

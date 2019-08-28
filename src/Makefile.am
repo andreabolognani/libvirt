@@ -135,15 +135,8 @@ VIRTBLOCKS_CLEAN_TARGETS =
 
 if WITH_VIRTBLOCKS
 
-if WITH_VIRTBLOCKS_RUST
-include rust/Makefile.def.inc.am
-include rust/Makefile.build.inc.am
-endif WITH_VIRTBLOCKS_RUST
-
-if WITH_VIRTBLOCKS_GOLANG
-include golang/Makefile.def.inc.am
-include golang/Makefile.build.inc.am
-endif WITH_VIRTBLOCKS_GOLANG
+include virtblocks_glue/Makefile.def.inc.am
+include virtblocks_glue/Makefile.build.inc.am
 
 endif WITH_VIRTBLOCKS
 

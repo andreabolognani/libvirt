@@ -111,18 +111,9 @@ libvirt_driver_qemu_impl_la_SOURCES = \
 	$(NULL)
 
 if WITH_VIRTBLOCKS
-
-if WITH_VIRTBLOCKS_RUST
 libvirt_driver_qemu_impl_la_LIBADD += \
-	libvirt_rust.la \
+	libvirt_virtblocks_glue.la \
 	$(NULL)
-endif WITH_VIRTBLOCKS_RUST
-
-if WITH_VIRTBLOCKS_GOLANG
-libvirt_driver_qemu_impl_la_LIBADD += \
-	libvirt_golang.la \
-	$(NULL)
-endif WITH_VIRTBLOCKS_GOLANG
 
 libvirt_driver_qemu_impl_la_CFLAGS += \
 	$(VIRTBLOCKS_CFLAGS) \
