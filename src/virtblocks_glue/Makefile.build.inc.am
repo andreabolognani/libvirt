@@ -11,19 +11,21 @@ virtblocks-clean:
 
 noinst_LTLIBRARIES += libvirt_virtblocks_glue.la
 
-if WITH_VIRTBLOCKS_RUST
 libvirt_virtblocks_glue_la_SOURCES = \
+	$(VIRTBLOCKS_INCLUDEFILES) \
+	$(NULL)
+
+if WITH_VIRTBLOCKS_RUST
+libvirt_virtblocks_glue_la_SOURCES += \
 	virtblocks_glue/rust.h \
 	virtblocks_glue/rust.c \
-	$(VIRTBLOCKS_INCLUDEFILES) \
 	$(NULL)
 endif WITH_VIRTBLOCKS_RUST
 
 if WITH_VIRTBLOCKS_GO
-libvirt_virtblocks_glue_la_SOURCES = \
+libvirt_virtblocks_glue_la_SOURCES += \
 	virtblocks_glue/go.h \
 	virtblocks_glue/go.c \
-	$(VIRTBLOCKS_INCLUDEFILES) \
 	$(NULL)
 endif WITH_VIRTBLOCKS_GO
 

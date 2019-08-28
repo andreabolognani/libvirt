@@ -18,6 +18,12 @@ AC_DEFUN([LIBVIRT_CHECK_VIRTBLOCKS], [
   AM_CONDITIONAL([WITH_VIRTBLOCKS_RUST], [test "$with_virtblocks" = "rust"])
   AM_CONDITIONAL([WITH_VIRTBLOCKS_GO], [test "$with_virtblocks" = "go"])
   AM_CONDITIONAL([WITH_VIRTBLOCKS], [test "$with_virtblocks" != "no"])
+
+  VIRTBLOCKS_LANGUAGE="$with_virtblocks"
+  AC_DEFINE_UNQUOTED([VIRTBLOCKS_LANGUAGE],
+                     ["$with_virtblocks"],
+                     [Virt Blocks language])
+  AC_SUBST([VIRTBLOCKS_LANGUAGE])
 ])
 
 AC_DEFUN([LIBVIRT_RESULT_VIRTBLOCKS], [
