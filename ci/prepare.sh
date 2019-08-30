@@ -23,7 +23,6 @@ if which apt-get 2>/dev/null; then
     apt-get update
     apt-get install -y wget
 elif which dnf 2>/dev/null; then
-    dnf update -y --refresh
     dnf install -y wget
 else
     echo "Can't install requirements" >&2
