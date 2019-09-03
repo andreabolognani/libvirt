@@ -3,11 +3,11 @@
 #include "util/virerror.h"
 #include "virlog.h"
 
-#include "rust.h"
+#include "virtblocks_glue.h"
 
-#define VIR_FROM_THIS VIR_FROM_RUST
+#define VIR_FROM_THIS VIR_FROM_VIRTBLOCKS
 
-VIR_LOG_INIT("rust");
+VIR_LOG_INIT("virtblocks");
 
 static VirtBlocksDevicesMemballoonModel modelTable[] = {
     VIRTBLOCKS_DEVICES_MEMBALLOON_MODEL_VIRTIO, /* VIR_DOMAIN_MEMBALLOON_MODEL_VIRTIO */

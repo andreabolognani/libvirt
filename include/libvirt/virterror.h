@@ -135,8 +135,7 @@ typedef enum {
     VIR_FROM_DOMAIN_CHECKPOINT = 69, /* Error from domain checkpoint */
 
     VIR_FROM_TPM = 70,          /* Error from TPM */
-    VIR_FROM_RUST = 71,         /* Error from Rust */
-    VIR_FROM_GO = 72,           /* Error from Go */
+    VIR_FROM_VIRTBLOCKS = 71,   /* Error from Virt Blocks */
 
 # ifdef VIR_ENUM_SENTINELS
     VIR_ERR_DOMAIN_LAST
