@@ -4148,7 +4148,7 @@ qemuBuildMemballoonCommandLine(virCommandPtr cmd ATTRIBUTE_UNUSED,
 {
     return -1;
 }
-#endif /* ! WITH_VIRTBLOCKS_RUST */
+#endif /* ! WITH_VIRTBLOCKS */
 
 
 static char *
