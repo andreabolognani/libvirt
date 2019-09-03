@@ -20,9 +20,9 @@ verify(ARRAY_CARDINALITY(modelTable) == VIR_DOMAIN_MEMBALLOON_MODEL_LAST);
 
 int
 virDomainMemballoonConvertToVirtBlocks(virDomainMemballoonDef *from,
-                                       VirtBlocksDevicesMemballoon *to)
+                                       VirtBlocksDevicesMemballoon **to)
 {
-    VIR_AUTOGO(VirtBlocksDevicesMemballoon) memballoon = 0;
+    VIR_AUTOPTR(VirtBlocksDevicesMemballoon) memballoon = NULL;
 
     memballoon = virtblocks_devices_memballoon_new();
 
@@ -43,7 +43,7 @@ virDomainMemballoonConvertToVirtBlocks(virDomainMemballoonDef *from,
             return -1;
     }
 
-    VIR_STEAL_GO(*to, memballoon);
+    VIR_STEAL_PTR(*to, memballoon);
 
     return 0;
 }

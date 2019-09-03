@@ -23,25 +23,8 @@
 #include "virtblocks.h"
 #include "conf/domain_conf.h"
 
-#define VIR_AUTOGO_FUNC_NAME(type) type##AutoGo
-
-#define VIR_DEFINE_AUTOGO_FUNC(type, func) \
-    static inline void VIR_AUTOGO_FUNC_NAME(type)(type *_goref) \
-    { \
-        (func)(*_goref); \
-    }
-
-#define VIR_AUTOGO(type) \
-    __attribute__((cleanup(VIR_AUTOGO_FUNC_NAME(type)))) type
-
-#define VIR_STEAL_GO(a, b) \
-    do { \
-        (a) = (b); \
-        (b) = 0; \
-    } while (0)
-
-VIR_DEFINE_AUTOGO_FUNC(VirtBlocksDevicesMemballoon,
-                           virtblocks_devices_memballoon_free);
+VIR_DEFINE_AUTOPTR_FUNC(VirtBlocksDevicesMemballoon,
+                        virtblocks_devices_memballoon_free);
 
 int virDomainMemballoonConvertToVirtBlocks(virDomainMemballoonDef *from,
-                                           VirtBlocksDevicesMemballoon *to);
+                                           VirtBlocksDevicesMemballoon **to);

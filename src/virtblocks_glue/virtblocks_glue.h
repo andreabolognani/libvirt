@@ -23,14 +23,8 @@
 #ifdef WITH_VIRTBLOCKS
 # ifdef WITH_VIRTBLOCKS_RUST
 #  include "rust.h"
-#  define VIR_AUTOVIRTBLOCKS(x) VIR_AUTOPTR(x)
-#  define VIR_AUTOVIRTBLOCKS_INIT NULL
-#  define VIR_STEAL_VIRTBLOCKS(a, b) VIR_STEAL_PTR(a, b)
 # endif /* WITH_VIRTBLOCKS_RUST */
 # ifdef WITH_VIRTBLOCKS_GO
 #  include "go.h"
-#  define VIR_AUTOVIRTBLOCKS(x) VIR_AUTOGO(x)
-#  define VIR_AUTOVIRTBLOCKS_INIT 0
-#  define VIR_STEAL_VIRTBLOCKS(a, b) VIR_STEAL_GO(a, b)
 # endif /* WITH_VIRTBLOCKS_GO */
 #endif /* WITH_VIRTBLOCKS */
