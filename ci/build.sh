@@ -10,9 +10,7 @@
 mkdir -p "$CI_CONT_BUILDDIR" || exit 1
 cd "$CI_CONT_BUILDDIR"
 
-export RUSTUP_HOME=/usr/local/rustup
-export CARGO_HOME=/usr/local/cargo
-export PATH=/usr/local/cargo/bin:/usr/local/go/bin:$PATH
+export PATH=/usr/local/go/bin:$PATH
 
 export VIR_TEST_DEBUG=1
 NOCONFIGURE=1 "$CI_CONT_SRCDIR/autogen.sh" || exit 1

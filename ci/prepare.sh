@@ -29,22 +29,7 @@ else
     exit 1
 fi
 
-export PATH=/usr/local/cargo/bin:/usr/local/go/bin:$PATH
-
-RUSTUP_ARCH=x86_64-unknown-linux-gnu
-RUSTUP_VERSION=1.18.3
-RUSTUP_SHA256=a46fe67199b7bcbbde2dcbc23ae08db6f29883e260e23899a88b9073effc9076
-RUST_VERSION=1.37.0
-export RUSTUP_HOME=/usr/local/rustup
-export CARGO_HOME=/usr/local/cargo
-
-wget https://static.rust-lang.org/rustup/archive/$RUSTUP_VERSION/$RUSTUP_ARCH/rustup-init
-echo "$RUSTUP_SHA256 rustup-init" | sha256sum -c -
-chmod +x rustup-init
-./rustup-init -y --no-modify-path --default-toolchain $RUST_VERSION
-rm rustup-init
-chmod -R a+w $RUSTUP_HOME $CARGO_HOME
-rustup component add rustfmt clippy
+export PATH=/usr/local/go/bin:$PATH
 
 GO_ARCH=linux-amd64
 GO_VERSION=1.12.9
