@@ -22,8 +22,8 @@ if which apt-get 2>/dev/null; then
     export DEBIAN_FRONTEND=noninteractive
     apt-get update
     apt-get install -y wget
-elif which dnf 2>/dev/null; then
-    dnf install -y wget
+elif which yum 2>/dev/null; then
+    yum install -y wget
 else
     echo "Can't install requirements" >&2
     exit 1
