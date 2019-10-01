@@ -832,6 +832,7 @@ mymain(void)
     unsetenv("QEMU_AUDIO_DRV");
     unsetenv("SDL_AUDIODRIVER");
 
+#if 0
     DO_TEST("minimal", NONE);
     DO_TEST("minimal-sandbox",
             QEMU_CAPS_SECCOMP_BLACKLIST);
@@ -3028,6 +3029,9 @@ mymain(void)
 
     DO_TEST_CAPS_LATEST("vhost-user-vga");
     DO_TEST_CAPS_LATEST("vhost-user-gpu-secondary");
+#endif
+
+    DO_TEST_CAPS_ARCH_LATEST("virtblocks", "x86_64");
 
     if (getenv("LIBVIRT_SKIP_CLEANUP") == NULL)
         virFileDeleteTree(fakerootdir);
