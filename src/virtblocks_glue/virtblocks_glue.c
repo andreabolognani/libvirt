@@ -9,41 +9,61 @@
 
 VIR_LOG_INIT("virtblocks");
 
-static VirtBlocksDevicesMemballoonModel modelTable[] = {
-    VIRTBLOCKS_DEVICES_MEMBALLOON_MODEL_VIRTIO, /* VIR_DOMAIN_MEMBALLOON_MODEL_VIRTIO */
-    VIRTBLOCKS_DEVICES_MEMBALLOON_MODEL_NONE, /* VIR_DOMAIN_MEMBALLOON_MODEL_XEN */
-    VIRTBLOCKS_DEVICES_MEMBALLOON_MODEL_NONE, /* VIR_DOMAIN_MEMBALLOON_MODEL_NONE */
-    VIRTBLOCKS_DEVICES_MEMBALLOON_MODEL_VIRTIO_TRANSITIONAL, /* VIR_DOMAIN_MEMBALLOON_MODEL_VIRTIO_TRANSITIONAL */
-    VIRTBLOCKS_DEVICES_MEMBALLOON_MODEL_VIRTIO_NON_TRANSITIONAL, /* VIR_DOMAIN_MEMBALLOON_MODEL_VIRTIO_NON_TRANSITIONAL */
-};
-verify(ARRAY_CARDINALITY(modelTable) == VIR_DOMAIN_MEMBALLOON_MODEL_LAST);
-
-int
-virDomainMemballoonConvertToVirtBlocks(virDomainMemballoonDef *from,
-                                       VirtBlocksDevicesMemballoon **to)
+static int
+virDomainConvertToVirtBlocksDisk(virDomainDef *from,
+                                 VirtBlocksDevicesDisk **to)
 {
-    VIR_AUTOPTR(VirtBlocksDevicesMemballoon) memballoon = NULL;
+    VIR_AUTOPTR(VirtBlocksDevicesDisk) disk = NULL;
+    virDomainDiskDef *fromDisk = NULL;
 
-    memballoon = virtblocks_devices_memballoon_new();
+    if (from->ndisks != 1)
+        return -1;
 
-    switch ((virDomainMemballoonModel) from->model) {
-        case VIR_DOMAIN_MEMBALLOON_MODEL_VIRTIO:
-        case VIR_DOMAIN_MEMBALLOON_MODEL_NONE:
-        case VIR_DOMAIN_MEMBALLOON_MODEL_VIRTIO_NON_TRANSITIONAL:
-        case VIR_DOMAIN_MEMBALLOON_MODEL_VIRTIO_TRANSITIONAL:
-            virtblocks_devices_memballoon_set_model(memballoon,
-                                                    modelTable[from->model]);
-            break;
+    fromDisk = from->disks[0];
 
-        case VIR_DOMAIN_MEMBALLOON_MODEL_XEN:
-        case VIR_DOMAIN_MEMBALLOON_MODEL_LAST:
-        default:
-            virReportEnumRangeError(virDomainMemballoonModel,
-                                    from->model);
-            return -1;
+    if (fromDisk->device != VIR_DOMAIN_DISK_DEVICE_DISK ||
+        fromDisk->bus != VIR_DOMAIN_DISK_BUS_VIRTIO ||
+        virDomainDiskGetType(fromDisk) != VIR_STORAGE_TYPE_FILE ||
+        virDomainDiskGetFormat(fromDisk) != VIR_STORAGE_FILE_QCOW2 ||
+        STRNEQ(virDomainDiskGetDriver(fromDisk), "qemu")) {
+        return -1;
     }
 
-    VIR_STEAL_PTR(*to, memballoon);
+    disk = virtblocks_devices_disk_new();
+    virtblocks_devices_disk_set_filename(disk,
+                                         virDomainDiskGetSource(fromDisk));
+
+    VIR_STEAL_PTR(*to, disk);
 
     return 0;
+}
+
+int
+virDomainConvertToVirtBlocks(virDomainDef *from,
+                             VirtBlocksVmDescription **to)
+{
+    VIR_AUTOPTR(VirtBlocksVmDescription) vm = NULL;
+    VIR_AUTOPTR(VirtBlocksDevicesDisk) disk = NULL;
+
+    vm = virtblocks_vm_description_new();
+
+    if (virDomainConvertToVirtBlocksDisk(from, &disk) < 0)
+        goto error;
+
+    virtblocks_vm_description_set_emulator(vm, from->emulator);
+    virtblocks_vm_description_set_disk(vm, disk);
+
+    /* These only work for the simplest of cases */
+    virtblocks_vm_description_set_cpus(vm, virDomainDefGetVcpusMax(from));
+    virtblocks_vm_description_set_memory(vm, virDomainDefGetMemoryInitial(from) / 1024);
+
+    VIR_STEAL_PTR(*to, vm);
+
+    return 0;
+
+ error:
+    virReportError(VIR_ERR_CONFIG_UNSUPPORTED,
+                   "%s",
+                   "Unsupported configuration");
+    return -1;
 }

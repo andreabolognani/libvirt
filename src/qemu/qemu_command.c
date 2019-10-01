@@ -69,6 +69,8 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
+#include "virtblocks_glue/virtblocks_glue.h"
+
 #define VIR_FROM_THIS VIR_FROM_QEMU
 
 VIR_LOG_INIT("qemu.qemu_command");
@@ -10267,6 +10269,11 @@ qemuBuildCommandLine(virQEMUDriverPtr driver,
     virDomainDefPtr def = vm->def;
     virQEMUCapsPtr qemuCaps = priv->qemuCaps;
     bool chardevStdioLogd = priv->chardevStdioLogd;
+
+    VIR_AUTOPTR(VirtBlocksVmDescription) virtBlocksVm = NULL;
+
+    if (virDomainConvertToVirtBlocks(def, &virtBlocksVm) < 0)
+        return NULL;
 
     VIR_DEBUG("driver=%p def=%p mon=%p "
               "qemuCaps=%p migrateURI=%s snapshot=%p vmop=%d",

@@ -23,8 +23,12 @@
 #include "virtblocks.h"
 #include "conf/domain_conf.h"
 
+int virDomainConvertToVirtBlocks(virDomainDef *from,
+                                 VirtBlocksVmDescription **to);
+
+VIR_DEFINE_AUTOPTR_FUNC(VirtBlocksVmDescription,
+                        virtblocks_vm_description_free);
+VIR_DEFINE_AUTOPTR_FUNC(VirtBlocksDevicesDisk,
+                        virtblocks_devices_disk_free);
 VIR_DEFINE_AUTOPTR_FUNC(VirtBlocksDevicesMemballoon,
                         virtblocks_devices_memballoon_free);
-
-int virDomainMemballoonConvertToVirtBlocks(virDomainMemballoonDef *from,
-                                           VirtBlocksDevicesMemballoon **to);
