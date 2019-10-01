@@ -9,6 +9,37 @@
 
 VIR_LOG_INIT("virtblocks");
 
+/*
+static int
+virDomainConvertToVirtBlocksSerial(virDomainDef *from,
+                                   VirtBlocksDevicesSerial **to)
+{
+    VIR_AUTOPTR(VirtBlocksDevicesSerial) serial = NULL;
+    virDomainChrDefPtr *fromSerial = NULL;
+
+    if (from->nserials != 1)
+        return -1;
+
+    fromSerial = from->serials[0];
+
+    if (fromSerial->type != VIR_DOMAIN_CHR_TYPE_UNIX ||
+        fromDisk->bus != VIR_DOMAIN_DISK_BUS_VIRTIO ||
+        virDomainDiskGetType(fromDisk) != VIR_STORAGE_TYPE_FILE ||
+        virDomainDiskGetFormat(fromDisk) != VIR_STORAGE_FILE_QCOW2 ||
+        STRNEQ(virDomainDiskGetDriver(fromDisk), "qemu")) {
+        return -1;
+    }
+
+    disk = virtblocks_devices_disk_new();
+    virtblocks_devices_disk_set_filename(disk,
+                                         virDomainDiskGetSource(fromDisk));
+
+    VIR_STEAL_PTR(*to, disk);
+
+    return 0;
+}
+*/
+
 static int
 virDomainConvertToVirtBlocksDisk(virDomainDef *from,
                                  VirtBlocksDevicesDisk **to)
